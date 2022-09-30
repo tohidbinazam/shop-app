@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;600;700&display=swap');
+
+*{
+  font-family: 'Dosis', sans-serif;
+  font-weight: 500;
+}
+a{
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+}
+
+a:hover{
+  text-decoration: none;
+  color: black;
+}
+
+li{
+  list-style: none;
+}
+
+ul{
+  margin: 0;
+  padding: 0;
+}

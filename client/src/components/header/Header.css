@@ -1,0 +1,14 @@
+.menu ul  {
+    padding: 14px 0px;
+}
+.menu ul li {
+    display: inline-block;
+}
+.menu ul li a{
+    padding: 0px 20px;
+    color: white;
+    border-right: 1px solid white;
+}
+.menu ul li a:hover{
+    color: white;
+}
