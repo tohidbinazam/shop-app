@@ -19,7 +19,6 @@ const Admin = () => {
                         <ProductQuickView />
                         <Card>
                             <Card.Body>
-                                <div className='admin-menu'>
                                     <Nav variant='pills' className="flex-column">
                                         <Nav.Item>
                                             <Nav.Link eventKey="Products">Products</Nav.Link>
@@ -37,28 +36,31 @@ const Admin = () => {
                                             <Nav.Link eventKey="Stores">Stores</Nav.Link>
                                         </Nav.Item>
                                     </Nav>
-                                </div>
                             </Card.Body>
                         </Card>
                     </Col>
                     <Col md='10'>
-                        <Tab.Content>
-                            <Tab.Pane eventKey='Products'>
-                                <Product />
-                            </Tab.Pane>
-                            <Tab.Pane eventKey='Category'>
-                                <Category />
-                            </Tab.Pane>
-                            <Tab.Pane eventKey='Tags'>
-                                <Tags />
-                            </Tab.Pane>
-                            <Tab.Pane eventKey='Brands'>
-                                <Brands />
-                            </Tab.Pane>
-                            <Tab.Pane eventKey='Stores'>
-                                <Stores />
-                            </Tab.Pane>
-                        </Tab.Content>
+                        <Card>
+                            <Card.Body>
+                                <Tab.Content>
+                                    <Tab.Pane eventKey='Products'>
+                                        <Product />
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey='Category'>
+                                        <Category />
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey='Tags'>
+                                        <Tags />
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey='Brands'>
+                                        <Brands />
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey='Stores'>
+                                        <Stores />
+                                    </Tab.Pane>
+                                </Tab.Content>
+                            </Card.Body>
+                        </Card>
                     </Col>
                 </Row>
             </Tab.Container>
