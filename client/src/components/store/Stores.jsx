@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
+import { useSelector } from 'react-redux';
 import AddStore from './AddStore';
 
 const Stores = () => {
@@ -11,6 +12,11 @@ const Stores = () => {
 
     const handleShow = () => setShow(true)
     const handleHide = () => setShow(false)
+
+    const { store } = useSelector(state => state)
+
+    console.log(store);
+    
     
   return (
     <div>

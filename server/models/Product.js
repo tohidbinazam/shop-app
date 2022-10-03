@@ -14,7 +14,7 @@ const ProductModal = Schema({
     },
     sell_price :{
         type : Number,
-        required : [ true, 'Sell Price Price is required']
+        required : [ true, 'Sell Price is required']
     },
     // category:{
     //     type : Schema.Types.ObjectId,
@@ -40,6 +40,7 @@ const ProductModal = Schema({
     slug:{
         type: String,
         required : true,
+        unique : true,
         trim : true
     },
     photo:{
