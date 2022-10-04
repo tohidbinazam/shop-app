@@ -2,7 +2,8 @@
 // Make slug from data
 const makeSlug = (data) => {
 
-    const slug = data.trim().split(' ').join('-')
+    const lowercase = data.toLowerCase().trim()
+    const slug = lowercase.split(' ').join('-')
 
     return slug
 }

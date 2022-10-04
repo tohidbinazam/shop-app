@@ -3,22 +3,22 @@ const { Schema, model } = mongoose;
 
 
 const storeModal = Schema({
-    name :{
+    name:{
         type : String,
         required : [ true, 'Name is required'],
         trim : true,
         unique : true
     },
-    city :{
+    city:{
         type : String,
         required : [ true, 'Store location City is required']
     },
-    owner :{
+    owner:{
         type : String,
         required : [ true, 'Store owner name is required'],
         trim : true
     },
-    owner_number :{
+    owner_number:{
         type : String,
         required : [ true, 'Owner number is required'],
         unique : [true, 'Owner number is required'],
@@ -30,6 +30,11 @@ const storeModal = Schema({
         unique : true,
         trim : true
     },
+    photo: {
+        type: String,
+        required : true,
+        unique : true,
+    }
 
 },{ timestamps : true })
 
