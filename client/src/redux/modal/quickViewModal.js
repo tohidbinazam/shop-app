@@ -1,5 +1,5 @@
 import initialState from "./initialState";
-import { HIDE, SHOW } from "./typs";
+import { HIDE, SHOW } from "./types";
 
 
 const quickViewModal = (state = initialState, { type, payload }) => {

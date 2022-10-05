@@ -1,4 +1,4 @@
-import { HIDE, SHOW } from "./typs";
+import { HIDE, SHOW } from "./types";
 
 export const modalShow = () => {
     return {
