@@ -1,3 +1,6 @@
-const initialState = []
+const initialState = {
+    stores: [],
+    error: ''
+}
 
 export default initialState

@@ -1,14 +1,14 @@
 import initialState from "./initialState";
-import { ALL_STORE } from "./type";
+import { ALL_STORES } from "./type";
 
 
 const storeReducer = ( state = initialState, { type, payload }) => {
 
     switch (type) {
-        case ALL_STORE:
+        case ALL_STORES:
             return{
                 ...state,
-                data: payload
+                stores: payload
             }
     
         default:

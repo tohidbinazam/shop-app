@@ -4,12 +4,12 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import Axios from 'axios'
 import { toast } from 'react-toastify';
 import makeSlug from '../../utility/makeSlug';
-// import { useDispatch } from 'react-redux';
-// import { getAllStore } from '../../redux/store/action';
+import { useDispatch } from 'react-redux';
+import { getAllStores } from '../../redux/store/action';
 
 const AddStore = ({ show, hide }) => {
 
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
     // Init input state
     const [ input, setInput ] = useState({})
@@ -43,7 +43,7 @@ const AddStore = ({ show, hide }) => {
         // Add New Store
         Axios.post('http://localhost:5050/api/v1/store', data).then(res => {
             toast.success(res.data)
-            // dispatch(getAllStore())
+            dispatch(getAllStores())
             
         }).catch(() => {
             toast.error('Store Add Failed');

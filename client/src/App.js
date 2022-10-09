@@ -5,12 +5,18 @@ import Shop from "./pages/shop/Shop";
 import LoadingBar from 'react-top-loading-bar'
 import { useDispatch, useSelector } from "react-redux";
 import { loadingEnd } from "./redux/loading-bar/action";
+import { useEffect } from "react";
+import { getAllStores } from "./redux/store/action";
 
 function App() {
 
   const { progress } = useSelector(state => state)
 
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getAllStores())
+  },[dispatch])
   
   return (
     <div className="App">

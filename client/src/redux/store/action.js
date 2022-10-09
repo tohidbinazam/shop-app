@@ -1,13 +1,13 @@
 import axios from "axios";
-import { ALL_STORE } from "./type";
+import { ALL_STORES } from "./type";
 
 
-export const getAllStore = () => {
-    axios.get('http://localhost:5050/api/v1/store').then(res => {
+export const getAllStores = () => async ( dispatch ) => {
 
-        return {
-            type : ALL_STORE,
+    await axios.get('http://localhost:5050/api/v1/store').then(res => {
+        dispatch({
+            type : ALL_STORES,
             payload : res.data
-        }
+        })
     })
 }

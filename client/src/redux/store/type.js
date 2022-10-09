@@ -1,1 +1,1 @@
-export const ALL_STORE = 'ALL_STORE'
+export const ALL_STORES = 'ALL_STORES'

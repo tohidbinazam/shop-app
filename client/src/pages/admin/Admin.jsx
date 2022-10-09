@@ -5,7 +5,7 @@ import Category from '../../components/category/Category';
 import Product from '../../components/product/Product';
 import Tags from '../../components/tag/Tags';
 import Brands from '../../components/brand/Brands';
-import Stores from '../../components/store/Stores';
+import Store from '../../components/store/Store';
 
 const Admin = () => {
 
@@ -56,7 +56,7 @@ const Admin = () => {
                                         <Brands />
                                     </Tab.Pane>
                                     <Tab.Pane eventKey='Stores'>
-                                        <Stores />
+                                        <Store />
                                     </Tab.Pane>
                                 </Tab.Content>
                             </Card.Body>
