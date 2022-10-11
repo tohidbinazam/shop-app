@@ -57,8 +57,8 @@ export const deleteStore = async (req, res, next) => {
     const { id } = req.params
 
     try {
-        const store = await Store.findByIdAndDelete(id)
-        res.status(200).json(store)
+        await Store.findByIdAndDelete(id)
+        res.status(200).json('Store Delete Successfully')
     } catch (error) {
         next(error)
     }

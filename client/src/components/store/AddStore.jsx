@@ -1,11 +1,9 @@
 import React from 'react'
 import { useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
-import Axios from 'axios'
-import { toast } from 'react-toastify';
 import makeSlug from '../../utility/makeSlug';
 import { useDispatch } from 'react-redux';
-import { getAllStores } from '../../redux/store/action';
+import { createStore } from '../../redux/store/action';
 
 const AddStore = ({ show, hide }) => {
 
@@ -39,16 +37,8 @@ const AddStore = ({ show, hide }) => {
         data.append('slug', slug)
         data.append('photo', input.photo)
         
-
-        // Add New Store
-        Axios.post('http://localhost:5050/api/v1/store', data).then(res => {
-            toast.success(res.data)
-            dispatch(getAllStores())
-            
-        }).catch(() => {
-            toast.error('Store Add Failed');
-
-        })
+        dispatch(createStore(data))
+        
     }
 
 

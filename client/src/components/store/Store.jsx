@@ -2,10 +2,13 @@ import React from 'react'
 import { useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteStore } from '../../redux/store/action';
 import AddStore from './AddStore';
 
 const Store = () => {
+
+    const dispatch = useDispatch()
 
     // Init modal useState
     const [show, setShow] = useState()
@@ -49,7 +52,7 @@ const Store = () => {
                         
                         <td>
                             <Button variant='warning' className='mx-2'><FaRegEdit /> Edit</Button>
-                            <Button variant='danger'><FaTrashAlt /> Delete</Button>
+                            <Button onClick={ () => dispatch(deleteStore(data._id)) } variant='danger'><FaTrashAlt /> Delete</Button>
                         </td>
                     </tr>
                     )
