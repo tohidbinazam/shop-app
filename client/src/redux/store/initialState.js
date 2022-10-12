@@ -1,5 +1,7 @@
 const initialState = {
     stores: [],
+    modal: false,
+    store: '',
     error: ''
 }
 

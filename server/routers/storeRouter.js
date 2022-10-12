@@ -55,7 +55,7 @@ const upload = multer({
 
 Router.route('/').get(getAllStores).post(upload, createStore)
 Router.get('/:slug', getSingleStore)
-Router.route('/:id').patch(updateStore).delete(deleteStore)
+Router.route('/:id').patch(upload, updateStore).delete(deleteStore)
 
 
 export default Router

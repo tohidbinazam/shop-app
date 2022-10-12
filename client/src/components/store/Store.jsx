@@ -1,9 +1,9 @@
 import React from 'react'
-import { useState } from 'react';
+// import { useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteStore } from '../../redux/store/action';
+import { deleteStore, modalShow, singleStore } from '../../redux/store/action';
 import AddStore from './AddStore';
 
 const Store = () => {
@@ -11,19 +11,19 @@ const Store = () => {
     const dispatch = useDispatch()
 
     // Init modal useState
-    const [show, setShow] = useState()
+    // const [show, setShow] = useState()
 
-    const handleShow = () => setShow(true)
-    const handleHide = () => setShow(false)
+    // const handleShow = () => setShow(true)
+    // const handleHide = () => setShow(false)
 
     const { stores } = useSelector(state => state.store)
 
   return (
     <div>
-        <AddStore show={show} hide= { handleHide }/>
+        <AddStore/>
         <div className='d-flex justify-content-between my-3'>
             <h3>Stores</h3>
-            <Button onClick={handleShow}> Add New Store </Button>
+            <Button onClick={() => dispatch(modalShow())}> Add New Store </Button>
         </div>
         <Table striped hover bordered variant='dark'>
             <thead>
@@ -51,13 +51,12 @@ const Store = () => {
                         <td><img className='table-image' src={`http://localhost:5050/images/products/photos/${data.photo}`} alt={data.name}/></td>
                         
                         <td>
-                            <Button variant='warning' className='mx-2'><FaRegEdit /> Edit</Button>
+                            <Button onClick={ () => dispatch(singleStore(data._id)) } variant='warning' className='mx-2'><FaRegEdit /> Edit</Button>
                             <Button onClick={ () => dispatch(deleteStore(data._id)) } variant='danger'><FaTrashAlt /> Delete</Button>
                         </td>
                     </tr>
                     )
                 }
-                
             </tbody>
         </Table>   
     </div>

@@ -73,19 +73,19 @@ const AddProduct = ({ show, hide }) => {
                     <Row>
                         <Form.Group className='mb-3'>
                             <Form.Label>Name</Form.Label>
-                            <Form.Control onChange={ handleInput } type='text' placeholder='Product name'/>
+                            <Form.Control name='name' onChange={ handleInput } type='text' placeholder='Product name'/>
                         </Form.Group>
                         <Form.Group className='mb-3' as={ Col } md='6'>
                             <Form.Label>Regular Price</Form.Label>
-                            <Form.Control onChange={ handleInput } type='number' placeholder='$$'/>
+                            <Form.Control name='regular_price' onChange={ handleInput } type='number' placeholder='$$'/>
                         </Form.Group>
                         <Form.Group className='mb-3' as={ Col } md='6'>
                             <Form.Label>Sell Price</Form.Label>
-                            <Form.Control onChange={ handleInput } type='number' placeholder='$$'/>
+                            <Form.Control name='sell_price' onChange={ handleInput } type='number' placeholder='$$'/>
                         </Form.Group>
                         <Form.Group className='mb-3'>
                             <Form.Label>Brand</Form.Label>
-                            <Form.Select onChange={ handleInput }>
+                            <Form.Select name='brand' onChange={ handleInput }>
                                 <option >Select Brand</option>
                                 <option value='RFL' >RFL</option>
                                 <option value='PUMA' >PUMA</option>
@@ -95,7 +95,7 @@ const AddProduct = ({ show, hide }) => {
                         </Form.Group>
                         <Form.Group className='mb-3' as={ Col } md='8'>
                             <Form.Label>Category</Form.Label>
-                            <Form.Select onChange={ handleInput }>
+                            <Form.Select name='category' onChange={ handleInput }>
                                 <option >Select Category</option>
                                 <option value='Man' >Man</option>
                                 <option value='Woman' >Woman</option>
@@ -105,7 +105,7 @@ const AddProduct = ({ show, hide }) => {
                         </Form.Group>
                         <Form.Group className='mb-3' as={ Col } md='4'>
                             <Form.Label>Stock</Form.Label>
-                            <Form.Control onChange={ handleInput } type='number' placeholder='Available quantity'/>
+                            <Form.Control name='stock' onChange={ handleInput } type='number' placeholder='Available quantity'/>
                         </Form.Group>
                         <Form.Group className='mb-3'>
                             <Form.Label>Tags</Form.Label><br />

@@ -16,6 +16,7 @@ export const createStore = async (req, res, next) => {
     const { photo } = req.files
 
     const main_photo = photo[0].filename
+    console.log(req.body);
 
     try {
         await Store.create({ ...req.body, photo: main_photo})
@@ -43,9 +44,12 @@ export const updateStore = async (req, res, next) => {
 
     const { id } = req.params
 
+    // const { photo } = req.files
+    // const main_photo = photo[0].filename
+    
     try {
-        const store = await Store.findByIdAndUpdate(id, req.body, { new: true })
-        res.status(200).json(store)
+        await Store.findByIdAndUpdate(id, { ...req.body }, { new: true })
+        res.status(200).json('Store update successfully')
     } catch (error) {
         next(error)
     }
