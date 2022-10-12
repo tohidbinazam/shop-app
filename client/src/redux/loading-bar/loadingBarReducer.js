@@ -2,7 +2,7 @@ import initialState from "./initialState";
 import { END, START } from "./types";
 
 
-const loadingBarReducer = (state = initialState, { type, payload }) => {
+const loadingBarReducer = (state = initialState, { type }) => {
 
     switch (type) {
         case START:
