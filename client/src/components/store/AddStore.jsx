@@ -37,20 +37,20 @@ const AddStore = () => {
 
         // Make slug and update
         const slug = makeSlug(input.name)
+        const data = new FormData()
         
         if (input._id) {
 
-            const data = new FormData()
             data.append('name', input.name)
             data.append('city', input.city)
             data.append('owner', input.owner)
             data.append('owner_number', input.owner_number)
             data.append('slug', slug)
+            data.append('photo', input.photo)
 
             dispatch(updateStore(input._id, data))
         } else{
             
-            const data = new FormData()
             data.append('name', input.name)
             data.append('city', input.city)
             data.append('owner', input.owner)
