@@ -94,7 +94,7 @@ const AddStore = () => {
                     </Form.Group>
                     <Form.Group className='mb-3 text-end'>
                         <Button onClick={ () => dispatch(modalHide()) } variant='secondary me-2'>Close</Button>
-                        <Button type='submit' onClick={ () => dispatch(modalHide()) } > Submit </Button>
+                        <Button type='submit'> Submit </Button>
                     </Form.Group>
                 </Form>
             </Modal.Body>

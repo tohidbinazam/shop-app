@@ -19,8 +19,8 @@ export const createStore = async (req, res, next) => {
     const main_photo = photo[0].filename
 
     try {
-        await Store.create({ ...req.body, photo: main_photo})
-        res.status(201).json('Store Add Successfully')
+        const store = await Store.create({ ...req.body, photo: main_photo})
+        res.status(201).json(store)
     } catch (error) {
         next(error)
     }

@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from 'dotenv'
 import colors from 'colors'
-import cors from 'cors'
 import productRouter from "./routers/productRouter.js";
 import categoryRouter from "./routers/categoryRouter.js";
 import tagRouter from "./routers/tagRouter.js";
@@ -15,8 +14,6 @@ dotenv.config()
 
 // Express init
 const app = express()
-
-app.use(cors())
 
 // Dotenv variable
 const app_name = process.env.APP_NAME

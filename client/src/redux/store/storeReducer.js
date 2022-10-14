@@ -26,7 +26,6 @@ const storeReducer = ( state = initialState, { type, payload }) => {
                 ...state,
                 store: payload
             }
-    
         default:
             return state
     }
