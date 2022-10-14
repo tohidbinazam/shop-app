@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ALL_STORES, MODAL_HIDE, MODAL_SHOW, SINGLE_STORE } from "./type";
 import { toast } from 'react-toastify';
+import swal from 'sweetalert'
 
 
 export const modalShow = () => ({
@@ -35,21 +36,36 @@ export const createStore = (data) => async (dispatch) => {
     })
 }
 
-export const deleteStore = (id) => async (dispatch, getState) => {
+export const deleteStore = (id) => (dispatch, getState) => {
 
     // Add New Store
-    await axios.delete(`http://localhost:5050/api/v1/store/${id}`).then(res => {
-        const { stores } = getState().store
-        const payload = stores.filter(data => data._id !== id)
-        dispatch({
-            type: ALL_STORES,
-            payload
-        });
-        toast.success(res.data);
-
-    }).catch(() => {
-        toast.error('Store Delate Failed');
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
     })
+    .then(async (willDelete) => {
+    if (willDelete) {
+        swal("Deleted","Poof! Your imaginary file has been deleted!", "success");
+
+        await axios.delete(`http://localhost:5050/api/v1/store/${id}`).then(res => {
+            const { stores } = getState().store
+            const payload = stores.filter(data => data._id !== id)
+            dispatch({
+                type: ALL_STORES,
+                payload
+            });
+            toast.success(res.data);
+
+        }).catch(() => {
+            toast.error('Store Delate Failed');
+        })
+    } else {
+        swal("Your imaginary file is safe!");
+    }
+    });
 }
 
 export const singleStore = (id) => (dispatch, getState) => {

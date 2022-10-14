@@ -14,7 +14,7 @@ const AddStore = () => {
     
     
     // Init input state
-    const [ input , setInput ] = useState({})
+    const [ input , setInput ] = useState('')
 
     useEffect(() => {
         setInput(store)
@@ -38,8 +38,18 @@ const AddStore = () => {
         // Make slug and update
         const slug = makeSlug(input.name)
         
-        if (store) {
+        if (input._id) {
 
+            const data = new FormData()
+            data.append('name', input.name)
+            data.append('city', input.city)
+            data.append('owner', input.owner)
+            data.append('owner_number', input.owner_number)
+            data.append('slug', slug)
+
+            dispatch(updateStore(input._id, data))
+        } else{
+            
             const data = new FormData()
             data.append('name', input.name)
             data.append('city', input.city)
@@ -49,16 +59,7 @@ const AddStore = () => {
             data.append('photo', input.photo)
             
             dispatch(createStore(data)) 
-        } else{
-            
-            const data = new FormData()
-            data.append('name', input.name)
-            data.append('city', input.city)
-            data.append('owner', input.owner)
-            data.append('owner_number', input.owner_number)
-            data.append('slug', slug)
-
-            dispatch(updateStore(input._id, data))
+            setInput('')
         }
     }
 
@@ -81,7 +82,7 @@ const AddStore = () => {
                     </Form.Group>
                     <Form.Group className='mb-3'>
                         <Form.Label>Store Photo</Form.Label>
-                        <Form.Control name='photo' onChange={ handelPhoto } type='file'/>
+                        <Form.Control name='photo' onChange={ handelPhoto } type='file' accept="image/png, image/jpeg"/>
                     </Form.Group>
                     <Form.Group className='mb-3'>
                         <Form.Label>Owner</Form.Label>

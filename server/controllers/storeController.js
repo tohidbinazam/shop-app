@@ -16,7 +16,6 @@ export const createStore = async (req, res, next) => {
     const { photo } = req.files
 
     const main_photo = photo[0].filename
-    console.log(req.body);
 
     try {
         await Store.create({ ...req.body, photo: main_photo})
