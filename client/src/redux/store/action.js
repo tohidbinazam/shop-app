@@ -1,25 +1,34 @@
 import axios from "axios";
-import { ALL_STORES, MODAL_HIDE, MODAL_SHOW, SINGLE_STORE } from "./type";
+import { ALL_STORES, MODAL_HIDE, MODAL_SHOW, SINGLE_STORE, SKELETON_END, SKELETON_START } from "./type";
 import { toast } from 'react-toastify';
 import swal from 'sweetalert'
 
 
+const skeletonStart = () => ({
+    type : SKELETON_START
+})
+
+const skeletonEnd = () => ({
+    type : SKELETON_END
+})
+
 export const modalShow = () => ({
     type : MODAL_SHOW
 })
-
 export const modalHide = () => ({
     type : MODAL_HIDE
 })
 
 export const getAllStores = () => async ( dispatch ) => {
 
+    dispatch(skeletonStart())
     await axios.get('/api/v1/store').then(res => {
-        dispatch({
-            type : ALL_STORES,
-            payload : res.data
+            dispatch(skeletonEnd())
+            dispatch({
+                type : ALL_STORES,
+                payload : res.data
+            })
         })
-    })
 }
 
 export const createStore = (data) => async (dispatch, getState) => {

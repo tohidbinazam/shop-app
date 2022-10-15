@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import 'react-loading-skeleton/dist/skeleton.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'react-toastify/dist/ReactToastify.min.css'
 import './Index.css';

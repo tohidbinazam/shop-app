@@ -23,6 +23,10 @@ ul{
   margin: 0;
   padding: 0;
 }
+td{
+  text-align: center;
+  vertical-align: middle;
+}
 
 .table-image{
   width: 50px;

@@ -68,7 +68,7 @@ const AddStore = () => {
     <div>
         <Modal show={ modal } onHide={ () => dispatch(modalHide()) } centered>
             <Modal.Header closeButton>
-                <h3>Create Store</h3>
+                <h3>{ store ? 'Update' : 'Create' } Store</h3>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={ handleSubmit }>
