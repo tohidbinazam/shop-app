@@ -19,7 +19,7 @@ const Store = () => {
             <h3>Stores</h3>
             <Button onClick={() => dispatch(modalShow())}> Add New Store </Button>
         </div>
-        <Table striped hover bordered variant='dark'>
+        <Table striped hover bordered variant='dark' className='text-center'>
             <thead>
                 <tr>
                     <th>No</th>
