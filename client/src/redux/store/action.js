@@ -43,12 +43,10 @@ export const createStore = (data) => async (dispatch, getState) => {
         dispatch({
             type: ALL_STORES,
             payload: stores
-
         })
         
-    }).catch(() => {
-        toast.error('Store Add Failed');
-
+    }).catch(error => {
+        toast.error(error.response.data.message);
     })
 }
 

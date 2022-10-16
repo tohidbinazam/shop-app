@@ -5,6 +5,7 @@ import makeSlug from '../../utility/makeSlug';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStore, modalHide, updateStore } from '../../redux/store/action';
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const AddStore = () => {
     
@@ -14,7 +15,14 @@ const AddStore = () => {
     
     
     // Init input state
-    const [ input , setInput ] = useState('')
+    const [ input , setInput ] = useState({
+            name: '',
+            city: '',
+            owner: '',
+            owner_number: ''
+        })
+
+    const { name, city, owner, owner_number, photo } = input
 
     useEffect(() => {
         setInput(store)
@@ -35,31 +43,41 @@ const AddStore = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        // Make slug and update
-        const slug = makeSlug(input.name)
-        const data = new FormData()
-        
-        if (input._id) {
+        if (name && city && owner && owner_number && photo) {
+            const data = new FormData()
 
-            data.append('name', input.name)
-            data.append('city', input.city)
-            data.append('owner', input.owner)
-            data.append('owner_number', input.owner_number)
-            data.append('slug', slug)
-            data.append('photo', input.photo)
+            // Make slug and update
+            const slug = makeSlug(input.name)
 
-            dispatch(updateStore(input._id, data))
-        } else{
-            
-            data.append('name', input.name)
-            data.append('city', input.city)
-            data.append('owner', input.owner)
-            data.append('owner_number', input.owner_number)
-            data.append('slug', slug)
-            data.append('photo', input.photo)
-            
-            dispatch(createStore(data)) 
-            setInput('')
+            if (store) {
+    
+                data.append('name', name)
+                data.append('city', city)
+                data.append('owner', owner)
+                data.append('owner_number', owner_number)
+                data.append('slug', slug)
+                data.append('photo', photo)
+    
+                dispatch(updateStore(store._id, data))
+            } else{
+                
+                data.append('name', name)
+                data.append('city', city)
+                data.append('owner', owner)
+                data.append('owner_number', owner_number)
+                data.append('slug', slug)
+                data.append('photo', photo)
+                
+                dispatch(createStore(data))
+                setInput({
+                    name: '',
+                    city: '',
+                    owner: '',
+                    owner_number: ''
+                })
+            }
+        } else {
+            toast.error('All fields are required')
         }
     }
 
@@ -74,11 +92,11 @@ const AddStore = () => {
                 <Form onSubmit={ handleSubmit }>
                     <Form.Group className='mb-3'>
                         <Form.Label>Name</Form.Label>
-                        <Form.Control name='name' value={input.name} onChange={ handelInput } type='text' placeholder='Store name'/>
+                        <Form.Control name='name' value={ name } onChange={ handelInput } type='text' placeholder='Store name'/>
                     </Form.Group>
                     <Form.Group className='mb-3'>
                         <Form.Label>City</Form.Label>
-                        <Form.Control name='city' value={input.city} onChange={ handelInput } type='text' placeholder='Store location'/>
+                        <Form.Control name='city' value={ city } onChange={ handelInput } type='text' placeholder='Store location'/>
                     </Form.Group>
                     <Form.Group className='mb-3'>
                         <Form.Label>Store Photo</Form.Label>
@@ -86,11 +104,11 @@ const AddStore = () => {
                     </Form.Group>
                     <Form.Group className='mb-3'>
                         <Form.Label>Owner</Form.Label>
-                        <Form.Control name='owner' value={input.owner} onChange={ handelInput } type='text' placeholder='Store owner name'/>
+                        <Form.Control name='owner' value={ owner } onChange={ handelInput } type='text' placeholder='Store owner name'/>
                     </Form.Group>
                     <Form.Group className='mb-3'>
                         <Form.Label>Owner number</Form.Label>
-                        <Form.Control name='owner_number' value={input.owner_number} onChange={ handelInput } type='text' placeholder='Store owner contact number'/>
+                        <Form.Control name='owner_number' value={ owner_number } onChange={ handelInput } type='text' placeholder='Store owner contact number'/>
                     </Form.Group>
                     <Form.Group className='mb-3 text-end'>
                         <Button onClick={ () => dispatch(modalHide()) } variant='secondary me-2'>Close</Button>

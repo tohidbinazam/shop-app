@@ -1,5 +1,6 @@
 import Store from "../models/Store.js";
 import fs from 'fs'
+import createError from "../utility/error/createError.js";
 
 export const getAllStores = async (req, res, next ) => {
 
@@ -15,10 +16,17 @@ export const getAllStores = async (req, res, next ) => {
 export const createStore = async (req, res, next) => {
 
     const { photo } = req.files
+    const { name, owner_number } = req.body
 
     const main_photo = photo[0].filename
 
     try {
+        const check = await Store.find().or([{ name }, { owner_number }])
+
+        if (check.length) {
+            fs.unlinkSync(`server/public/images/products/photos/${main_photo}`)
+            return next(createError(403, 'Already exist this store'))
+        }
         const store = await Store.create({ ...req.body, photo: main_photo})
         res.status(201).json(store)
     } catch (error) {
