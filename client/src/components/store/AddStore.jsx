@@ -75,6 +75,7 @@ const AddStore = () => {
                     owner: '',
                     owner_number: ''
                 })
+                e.target.reset()
             }
         } else {
             toast.error('All fields are required')
