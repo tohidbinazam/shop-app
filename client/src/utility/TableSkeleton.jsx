@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 const TableSkeleton = () => {
 
-  const { row, col, img, button } = useSelector(state => state.store.skeleton)
+  const { row, col, img, button } = useSelector(state => state.brand.skeleton)
 
   const colum = Array(col).fill(0)
     

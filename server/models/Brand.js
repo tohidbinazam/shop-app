@@ -22,7 +22,7 @@ const brandModal = Schema({
     company_number :{
         type : String,
         required : [ true, 'Local Distributor company number is required'],
-        unique : [true, 'Company number is required'],
+        unique : true,
         trim : true
     },
     slug:{

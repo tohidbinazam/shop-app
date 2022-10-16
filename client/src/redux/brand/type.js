@@ -1,0 +1,6 @@
+export const ALL_BRANDS = 'ALL_BRANDS'
+export const SINGLE_BRAND = 'SINGLE_BRAND'
+export const MODAL_SHOW = 'BRAND_MODAL_SHOW'
+export const MODAL_HIDE = 'BRAND_MODAL_HIDE'
+export const SKELETON_START = 'BRAND_SKELETON_START'
+export const SKELETON_END = 'BRAND_SKELETON_END'

@@ -1,10 +1,8 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap';
 import makeSlug from '../../utility/makeSlug';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStore, modalHide, updateStore } from '../../redux/store/action';
-import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 const AddStore = () => {
@@ -12,7 +10,6 @@ const AddStore = () => {
     const { modal, store } = useSelector(state => state.store)
     
     const dispatch = useDispatch()
-    
     
     // Init input state
     const [ input , setInput ] = useState({
@@ -113,7 +110,7 @@ const AddStore = () => {
                     </Form.Group>
                     <Form.Group className='mb-3 text-end'>
                         <Button onClick={ () => dispatch(modalHide()) } variant='secondary me-2'>Close</Button>
-                        <Button type='submit'> Submit </Button>
+                        <Button type='submit'> { store ? 'Update' : 'Create' } </Button>
                     </Form.Group>
                 </Form>
             </Modal.Body>

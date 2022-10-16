@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadingEnd } from "./redux/loading-bar/action";
 import { useEffect } from "react";
 import { getAllStores } from "./redux/store/action";
+import { getAllBrands } from "./redux/brand/action";
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    dispatch(getAllBrands())
     dispatch(getAllStores())
   },[dispatch])
   

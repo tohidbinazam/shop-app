@@ -7,7 +7,7 @@ const storeModal = Schema({
         type : String,
         required : [ true, 'Name is required'],
         trim : true,
-        unique : [ true, 'Already exist this store' ]
+        unique : true
     },
     city:{
         type : String,
@@ -21,7 +21,7 @@ const storeModal = Schema({
     owner_number:{
         type : String,
         required : [ true, 'Owner number is required' ],
-        unique : [ true, 'Already exist this number' ],
+        unique : true,
         trim : true
     },
     slug:{
