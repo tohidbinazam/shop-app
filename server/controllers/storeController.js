@@ -56,20 +56,21 @@ export const updateStore = async (req, res, next) => {
 
         const { photo } = req.files
         const main_photo = photo[0].filename
+        const data = { ...req.body, photo : main_photo }
         try {
-            const store = await Store.findByIdAndUpdate(id, { ...req.body, photo : main_photo })
+            const store = await Store.findByIdAndUpdate(id, data)
             fs.unlinkSync(`server/public/images/products/photos/${store.photo}`)
-            res.status(200).json('Store update successfully')
-        } catch (error) {
-            next(error)
+            res.status(200).json(data)
+        } catch {
+            next(createError(406, 'Already exist this Store'))
         }
         
     } else {
         try {
-            await Store.findByIdAndUpdate(id, req.body, { new : true })
-            res.status(200).json('Store update successfully')
-        } catch (error) {
-            next(error)
+            const store = await Store.findByIdAndUpdate(id, req.body, { new : true })
+            res.status(200).json(store)
+        } catch {
+            next(createError(406, 'Already exist this Store'))
         }
     }
 

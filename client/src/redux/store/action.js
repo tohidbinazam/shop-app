@@ -45,8 +45,8 @@ export const createStore = (data) => async (dispatch, getState) => {
             payload: stores
         })
         
-    }).catch(error => {
-        toast.error(error.response.data.message);
+    }).catch(err => {
+        toast.error(err.response.data.message);
     })
 }
 
@@ -94,15 +94,23 @@ export const singleStore = (id) => (dispatch, getState) => {
     dispatch(modalShow())
 }
 
-export const updateStore = (id, data) => async (dispatch) => {
+export const updateStore = (id, data) => async (dispatch, getState) => {
 
     // Add New Store
     await axios.patch(`/api/v1/store/${id}`, data).then(res => {
         dispatch(modalHide())
-        dispatch(getAllStores())
-        toast.success(res.data);
 
-    }).catch(() => {
-        toast.error('Store Update Failed');
+        // Handle store update without send server request
+        const { stores } = getState().store
+        const index = stores.findIndex(data => data._id === id)
+        stores[index] = res.data
+        dispatch({
+            type: ALL_STORES,
+            payload: stores
+        })
+        toast.success('Store update successfully');
+
+    }).catch(err => {
+        toast.error(err.response.data.message);
     })
 }

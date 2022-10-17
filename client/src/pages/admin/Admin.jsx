@@ -13,7 +13,7 @@ const Admin = () => {
   return (
     <div>
         <Container>
-            <Tab.Container defaultActiveKey='Brands'>
+            <Tab.Container defaultActiveKey='Products'>
                 <Row>
                     <Col md='2'>
                         <ProductQuickView />

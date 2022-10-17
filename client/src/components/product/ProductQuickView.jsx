@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Col, Modal, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { modalHide } from '../../redux/modal/action';
+import { quickHide } from '../../redux/modal/action';
 
 const ProductQuickView = () => {
 
@@ -11,7 +11,7 @@ const ProductQuickView = () => {
 
   return (
     <div>
-        <Modal show= { product_modal } onHide= { () => dispatch(modalHide()) } centered>
+        <Modal show= { product_modal } onHide= { () => dispatch(quickHide()) } centered>
             <Modal.Header closeButton>
                 <h3>Product info</h3>
             </Modal.Header>
@@ -27,7 +27,7 @@ const ProductQuickView = () => {
                 </Row>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={ () => dispatch(modalHide()) } variant='secondary'>Close</Button>
+                <Button onClick={ () => dispatch(quickHide()) } variant='secondary'>Close</Button>
                 <Button>Product Details</Button>
             </Modal.Footer>
         </Modal>

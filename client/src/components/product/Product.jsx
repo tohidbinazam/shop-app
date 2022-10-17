@@ -1,29 +1,27 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button, Table } from 'react-bootstrap';
 import { FaEye, FaRegEdit, FaTrashAlt } from "react-icons/fa";
-import { modalShow } from '../../redux/modal/action';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteProduct, modalShow, singleProduct } from '../../redux/product/action';
+import { quickShow } from '../../redux/modal/action';
 import AddProduct from './AddProduct';
+import TableSkeleton from '../../utility/TableSkeleton';
 
 const Product = () => {
 
     const dispatch = useDispatch()
 
-    // Init modal useState
-    const [show, setShow] = useState()
-
-    const handleShow = () => setShow(true)
-    const handleHide = () => setShow(false)
+    const { products, skeleton } = useSelector(state => state.product)
     
     
   return (
     <div> 
-        <AddProduct show={show} hide={handleHide} />
+        <AddProduct />
         <div className='d-flex justify-content-between my-3'>
             <h3>Products</h3>
-            <Button onClick={handleShow} > Add new product </Button>
+            <Button onClick={ () => dispatch(modalShow()) } > Add new product </Button>
         </div>
-        <Table striped hover bordered variant='dark'>
+        <Table striped hover bordered variant='dark' className='text-center'>
             <thead>
                 <tr>
                     <th>No</th>
@@ -33,26 +31,32 @@ const Product = () => {
                     <th>Category</th>
                     <th>Brand</th>
                     <th>Stock</th>
-                    <th>Slug</th>
+                    <th>Photo</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>01</td>
-                    <td>Sony A4s</td>
-                    <td>3300</td>
-                    <td>3200</td>
-                    <td>Laptop</td>
-                    <td>RFL pis</td>
-                    <td>50</td>
-                    <td>sony-a4s</td>
-                    <td>
-                        <Button onClick={ () => dispatch( modalShow() ) } ><FaEye /> view</Button> 
-                        <Button variant='warning' className='mx-2'><FaRegEdit /> Edit</Button>
-                        <Button variant='danger'><FaTrashAlt /> Delete</Button>
-                    </td>
-                </tr>
+                { skeleton.status && <TableSkeleton /> }
+                {
+                    products.map((data, index) => 
+                        <tr>
+                            <td>{ index + 1 }</td>
+                            <td>{ data.name }</td>
+                            <td>{ data.regular_price }</td>
+                            <td>{ data.sell_price }</td>
+                            <td>{ data.category }</td>
+                            <td>{ data.brand }</td>
+                            <td>{ data.stock }</td>
+                            <td><img className='table-image' src={`http://localhost:5050/images/products/photos/${data.photo}`} alt={data.name}/></td>
+                            
+                            <td>
+                                <Button onClick={ () => dispatch( quickShow() ) } ><FaEye /> view</Button> 
+                                <Button onClick={ () => dispatch(singleProduct(data._id)) } variant='warning' className='mx-2'><FaRegEdit /> Edit</Button>
+                                <Button onClick={ () => dispatch(deleteProduct(data._id)) } variant='danger'><FaTrashAlt /> Delete </Button>
+                            </td>
+                        </tr>
+                    )
+                }
             </tbody>
         </Table>   
     </div>

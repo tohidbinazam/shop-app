@@ -1,12 +1,12 @@
 import { HIDE, SHOW } from "./types";
 
-export const modalShow = () => {
+export const quickShow = () => {
     return {
         type : SHOW
     }
 }
 
-export const modalHide = () => {
+export const quickHide = () => {
     return {
         type : HIDE
     }

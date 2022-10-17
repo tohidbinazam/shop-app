@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Card, Col, Container, Form, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import ProductQuickView from '../../components/product/ProductQuickView';
-import { modalShow } from '../../redux/modal/action';
+import { quickShow } from '../../redux/modal/action';
 import './Shop.css'
 
 const Shop = () => {
@@ -79,7 +79,7 @@ const Shop = () => {
                                     <h5>Sell price : $ 3200</h5>
                                 </Card.Body>
                                 <Card.Footer className='text-end'>
-                                    <Button onClick={ () => dispatch( modalShow() ) } > Quick view </Button>
+                                    <Button onClick={ () => dispatch( quickShow() ) } > Quick view </Button>
                                 </Card.Footer>
                             </Card>
                         </Col>
@@ -93,7 +93,7 @@ const Shop = () => {
                                     <h5>Sell price : $ 3200</h5>
                                 </Card.Body>
                                 <Card.Footer className='text-end'>
-                                    <Button onClick={ () => dispatch( modalShow() ) } > Quick view </Button>
+                                    <Button onClick={ () => dispatch( quickShow() ) } > Quick view </Button>
                                 </Card.Footer>
                             </Card>
                         </Col>

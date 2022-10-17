@@ -5,11 +5,13 @@ import loadingBarReducer from "./loading-bar/loadingBarReducer";
 import brandReducer from "./brand/brandReducer";
 import tagReducer from "./tag/tagReducer";
 import categoryReducer from "./category/categoryReducer";
+import productReducer from "./product/productReducer";
 
 
 const rootReducer = combineReducers({
-    product_modal: quickViewModal,
     progress : loadingBarReducer,
+    product : productReducer,
+    product_modal: quickViewModal,
     category: categoryReducer,
     tag: tagReducer,
     brand : brandReducer,

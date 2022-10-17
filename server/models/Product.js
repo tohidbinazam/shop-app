@@ -6,6 +6,7 @@ const ProductModal = Schema({
     name :{
         type : String,
         required : [ true, 'Name is required'],
+        unique : true,
         trim : true
     },
     regular_price :{
@@ -16,31 +17,30 @@ const ProductModal = Schema({
         type : Number,
         required : [ true, 'Sell Price is required']
     },
-    // category:{
-    //     type : Schema.Types.ObjectId,
-    //     required : true,
-    // },
-    // tag:{
-    //     type : [Schema.Types.ObjectId],
-    //     required : true,
-    // },
-    // brand:{
-    //     type: Schema.Types.ObjectId,
-    //     required : true
-    // },
+    category:{
+        type : Schema.Types.ObjectId,
+        required : true,
+    },
+    tag:{
+        type : [Schema.Types.ObjectId],
+        required : true,
+    },
+    brand:{
+        type: Schema.Types.ObjectId,
+        required : true
+    },
     stock:{
         type: Number,
         required : true,
         min : [ 10, 'Minimum Quantity is 10']
     },
-    // store:{
-    //     type: [Schema.Types.ObjectId],
-    //     required : true
-    // },
+    store:{
+        type: [Schema.Types.ObjectId],
+        required : true
+    },
     slug:{
         type: String,
         required : true,
-        unique : true,
         trim : true
     },
     photo:{
@@ -56,8 +56,7 @@ const ProductModal = Schema({
     },
     short_desc:{
         type: String,
-        maxLength : [ 30, 'Maximum length is 10'],
-        required : true
+        maxLength : [ 30, 'Maximum length is 10']
     },
     long_desc:{
         type: String,
