@@ -44,7 +44,7 @@ const AddStore = () => {
             const data = new FormData()
 
             // Make slug and update
-            const slug = makeSlug(input.name)
+            const slug = makeSlug( name )
 
             if (store) {
     

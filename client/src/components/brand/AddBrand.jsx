@@ -35,11 +35,10 @@ const AddBrand = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        console.log('Hello');
         if (name && origin && local_distributor && company_number) {
 
             // Make slug and update
-            const slug = makeSlug(input.name)
+            const slug = makeSlug( name )
 
             if (brand) {
                 dispatch(updateBrand(brand._id, { ...input, slug }))

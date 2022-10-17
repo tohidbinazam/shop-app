@@ -1,0 +1,6 @@
+export const ALL_TAGS = 'ALL_TAGS'
+export const SINGLE_TAG = 'SINGLE_TAG'
+export const MODAL_SHOW = 'TAG_MODAL_SHOW'
+export const MODAL_HIDE = 'TAG_MODAL_HIDE'
+export const SKELETON_START = 'TAG_SKELETON_START'
+export const SKELETON_END = 'TAG_SKELETON_END'
