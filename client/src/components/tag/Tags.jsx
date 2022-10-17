@@ -19,9 +19,9 @@ const Tags = () => {
         <AddTag />
         <div className='d-flex justify-content-between my-3'>
             <h3>Tags</h3>
-            <Button onClick={() => dispatch(modalShow())} > Add new Tag </Button>
+            <Button onClick={ () => dispatch(modalShow()) } > Add new Tag </Button>
         </div>
-        <Table striped hover bordered variant='dark'>
+        <Table striped hover bordered variant='dark' className='text-center'>
             <thead>
                 <tr>
                     <th>No</th>

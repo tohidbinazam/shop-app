@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { getAllStores } from "./redux/store/action";
 import { getAllBrands } from "./redux/brand/action";
 import { getAllTags } from "./redux/tag/action";
+import { getAllCategories } from "./redux/category/action";
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    dispatch(getAllCategories())
     dispatch(getAllTags())
     dispatch(getAllBrands())
     dispatch(getAllStores())

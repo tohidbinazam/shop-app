@@ -35,7 +35,7 @@ const AddTag = () => {
         if ( name ) {
 
             // Make slug and update
-            const slug = makeSlug( name )
+            const slug = makeSlug(name)
 
             if (tag) {
                 dispatch(updateTag(tag._id, { ...input, slug }))

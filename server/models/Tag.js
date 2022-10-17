@@ -12,7 +12,6 @@ const tagModal = Schema({
     slug:{
         type: String,
         required : true,
-        unique : true,
         trim: true
     }
 

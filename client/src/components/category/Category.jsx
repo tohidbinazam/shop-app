@@ -1,25 +1,27 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button, Table } from 'react-bootstrap';
 import { FaRegEdit, FaTrashAlt } from "react-icons/fa";
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteCategory, modalShow, singleCategory } from '../../redux/category/action';
+import TableSkeleton from '../../utility/TableSkeleton';
 import AddCategory from './AddCategory';
 
 const Category = () => {
 
-    // Init modal useState
-    const [show, setShow] = useState()
+    // modal Dispatch
+    const dispatch = useDispatch()
 
-    const handleShow = () => setShow(true)
-    const handleHide = () => setShow(false)
+    const { categories, skeleton } = useSelector(state => state.category)
     
     
   return (
     <div> 
-        <AddCategory show={show} hide={handleHide} />
+        <AddCategory />
         <div className='d-flex justify-content-between my-3'>
             <h3>Category</h3>
-            <Button onClick={handleShow} > Add new Category </Button>
+            <Button onClick={ () => dispatch(modalShow()) } > Add new Category </Button>
         </div>
-        <Table striped hover bordered variant='dark'>
+        <Table striped hover bordered variant='dark' className='text-center'>
             <thead>
                 <tr>
                     <th>No</th>
@@ -31,17 +33,22 @@ const Category = () => {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>01</td>
-                    <td>Man</td>
-                    <td>330</td>
-                    <td>32</td>
-                    <td>man</td>
-                    <td>
-                        <Button variant='warning' className='mx-2'><FaRegEdit /> Edit</Button>
-                        <Button variant='danger'><FaTrashAlt /> Delete</Button>
-                    </td>
-                </tr>
+                { skeleton.status && <TableSkeleton /> }
+                {
+                    categories.map((data, index) => 
+                        <tr>
+                            <td>{ index + 1 }</td>
+                            <td>{ data.name }</td>
+                            <td>{ data.origin }</td>
+                            <td>{ data.local_distributor }</td>
+                            <td>{ data.slug }</td>                       
+                            <td>
+                                <Button onClick={ () => dispatch(singleCategory(data._id)) } variant='warning' className='mx-2'><FaRegEdit /> Edit</Button>
+                                <Button onClick={ () => dispatch(deleteCategory(data._id)) } variant='danger'><FaTrashAlt /> Delete</Button>
+                            </td>
+                        </tr>
+                    )
+                }
             </tbody>
         </Table>   
     </div>

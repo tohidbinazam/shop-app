@@ -6,13 +6,12 @@ const categoryModal = Schema({
     name :{
         type : String,
         required : [ true, 'Name is required'],
-        trim : true,
-        unique: true
+        unique: true,
+        trim: true
     },
     slug:{
         type: String,
         required : true,
-        unique : true,
         trim: true
     }
 
