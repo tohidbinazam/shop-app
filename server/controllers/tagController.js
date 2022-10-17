@@ -19,7 +19,7 @@ export const createTag = async (req, res, next) => {
 
         const check = await Tag.find().or([{ name }])
         if (check.length) {
-            return next(createError(403, 'Already exist this tag'))
+            return next(createError(406, 'Already exist this Tag'))
         }
 
         const tag = await Tag.create(req.body)

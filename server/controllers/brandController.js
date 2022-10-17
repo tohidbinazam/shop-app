@@ -19,7 +19,7 @@ export const createBrand = async (req, res, next) => {
 
         const check = await Brand.find().or([{ name }, { local_distributor }, { company_number }])
         if (check.length) {
-            return next(createError(403, 'Already exist this brand'))
+            return next(createError(406, 'Already exist this Brand'))
         }
 
         const brand = await Brand.create(req.body)

@@ -25,7 +25,7 @@ export const createStore = async (req, res, next) => {
 
         if (check.length) {
             fs.unlinkSync(`server/public/images/products/photos/${main_photo}`)
-            return next(createError(403, 'Already exist this store'))
+            return next(createError(406, 'Already exist this Store'))
         }
         const store = await Store.create({ ...req.body, photo: main_photo})
         res.status(201).json(store)
