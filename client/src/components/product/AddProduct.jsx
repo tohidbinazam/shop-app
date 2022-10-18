@@ -1,34 +1,31 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { createProduct, modalHide, updateProduct } from '../../redux/product/action';
+import { createProduct, modalHide, setInput, updateProduct } from '../../redux/product/action';
 import makeSlug from '../../utility/makeSlug';
 
 const AddProduct = () => {
 
     // Main State
-    const { product } = useSelector(state => state)
+    const { product, category, tag, brand, store } = useSelector(state => state)
 
     // Product state
-    const { modal, single_product } = product
+    const { modal, input, single_product } = product
+
+    // Category state
+    const { categories } = category
+
+    // Tag state
+    const { tags } = tag
+
+    // Brand state
+    const { brands } = brand
+
+    // Store state
+    const { stores } = store
 
     const dispatch = useDispatch()
-
-    // Init input state
-    const [ input, setInput ] = useState({
-            name: '',
-            regular_price: '',
-            sell_price: '',
-            category: '',
-            tag: [],
-            brand:'',
-            store: [],
-            stock:'',
-            photo:'',
-            short_desc:'',
-            long_desc:''
-        })
 
     // const { name, regular_price, sell_price, category, brand, stock, photo, short_desc, long_desc } = input
 
@@ -38,12 +35,12 @@ const AddProduct = () => {
 
     // Update init state
     const handleInput = (e) => {
-        setInput(prev => ({ ...prev, [e.target.name] : e.target.value }))
+        dispatch(setInput({ [e.target.name] : e.target.value })) 
     }
 
     // Handle single photo
     const handelPhoto = (e) => {
-        setInput(prev => ({ ...prev, [e.target.name] : e.target.files[0] }))
+        dispatch(setInput({ [e.target.name] : e.target.files[0] }))
     }
 
     // Update Tag state
@@ -52,10 +49,10 @@ const AddProduct = () => {
         const tag = input.tag
         if (e.target.checked) {
             tag.push(e.target.value)
-            setInput(prev => ({ ...prev, tag }))
+            dispatch(setInput({ tag }))
         } else {
             const data = tag.filter(data => data !== e.target.value)
-            setInput(prev => ({ ...prev, tag : data }))
+            dispatch(setInput({ tag: data }))
         }
     }
 
@@ -65,10 +62,10 @@ const AddProduct = () => {
         const store = input.store
         if (e.target.checked) {
             store.push(e.target.value)
-            setInput(prev => ({ ...prev, store }))
+            dispatch(setInput({ store }))
         } else {
             const data = store.filter(data => data !== e.target.value)
-            setInput(prev => ({ ...prev, store : data }))
+            dispatch(setInput({ store: data }))
         }
     }
     
@@ -76,7 +73,7 @@ const AddProduct = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if (input.name && input.regular_price && input.sell_price && input.category && input.tag && input.brand && input.stock && input.long_desc) {
+        if (input.name && input.regular_price && input.category && input.tag && input.brand && input.long_desc) {
             const data = new FormData()
 
             
@@ -115,17 +112,6 @@ const AddProduct = () => {
                 data.append('photo', input.photo)
                 
                 dispatch(createProduct(data))
-                setInput({
-                    name: '',
-                    regular_price: '',
-                    sell_price: '',
-                    category: '',
-                    brand:'',
-                    stock:'',
-                    photo:'',
-                    short_desc:'',
-                    long_desc:''
-                })
                 e.target.reset()
             }
         } else {
@@ -159,10 +145,11 @@ const AddProduct = () => {
                             <Form.Label>Category</Form.Label>
                             <Form.Select name='category' value={ input.category } onChange={ handleInput }>
                                 <option >Select Category</option>
-                                <option value='Man' >Man</option>
-                                <option value='Woman' >Woman</option>
-                                <option value='Kids' >Kids</option>
-                                <option value='Electronic' >Electronic</option>
+                                {
+                                    categories.map(data =>
+                                            <option value={ data._id } >{ data.name }</option> 
+                                        )
+                                }
                             </Form.Select>
                         </Form.Group>
                         <Form.Group className='mb-3' as={ Col } md='4'>
@@ -173,15 +160,16 @@ const AddProduct = () => {
                             <Form.Label>Brand</Form.Label>
                             <Form.Select name='brand' value={ input.brand } onChange={ handleInput }>
                                 <option >Select Brand</option>
-                                <option value='RFL' >RFL</option>
-                                <option value='PUMA' >PUMA</option>
-                                <option value='hp' >hp</option>
-                                <option value='jamdany' >jamdany</option>
+                                {
+                                    brands.map(data =>
+                                            <option value={ data._id } >{ data.name }</option> 
+                                        )
+                                }
                             </Form.Select>
                         </Form.Group>
                         <Form.Group className='mb-3' as={ Col } md='8'>
                             <Form.Label>Photo</Form.Label>
-                            <Form.Control name='photo' onChange={ handelPhoto } type='file' />
+                            <Form.Control name='photo' onChange={ handelPhoto } type='file' accept="image/png, image/jpeg"/>
                         </Form.Group>
                         <Form.Group className='mb-3'>
                             <Form.Label>Gallery</Form.Label>
@@ -189,19 +177,19 @@ const AddProduct = () => {
                         </Form.Group>
                         <Form.Group className='mb-3'>
                             <Form.Label>Tags</Form.Label><br />
-                            <Form.Check onClick={ handleTag } value='Eid' type='checkbox' label='Eid' inline />
-                            <Form.Check onClick={ handleTag } value='Pojo' type='checkbox' label='Pojo' inline />
-                            <Form.Check onClick={ handleTag } value='Malaria' type='checkbox' label='Malaria' inline />
-                            <Form.Check onClick={ handleTag } value='Korbani' type='checkbox' label='Korbani' inline />
-                            <Form.Check onClick={ handleTag } value='Salami' type='checkbox' label='Salami' inline />
-                            <Form.Check onClick={ handleTag } value='Hoz' type='checkbox' label='Hoz' inline />
+                            {
+                                tags.map(data =>
+                                        <Form.Check onClick={ handleTag } value={ data._id } type='checkbox' label={ data.name } inline />
+                                    )
+                            }
                         </Form.Group>
                         <Form.Group className='mb-3'>
                             <Form.Label>Store</Form.Label><br />
-                            <Form.Check onClick={ handleStore } value='JKO' type='checkbox' label='JKO' inline />
-                            <Form.Check onClick={ handleStore } value='Al-Fadia' type='checkbox' label='Al-Fadia' inline />
-                            <Form.Check onClick={ handleStore } value='Islamia' type='checkbox' label='Islamia' inline />
-                            <Form.Check onClick={ handleStore } value='Khaza Store' type='checkbox' label='Khaza Store' inline />
+                            {
+                                stores.map(data =>
+                                        <Form.Check onClick={ handleStore } value={ data._id } type='checkbox' label={ data.name } inline />
+                                    )
+                            }
                         </Form.Group>
                         <Form.Group className='mb-3'>
                             <Form.Label>Short Description</Form.Label>

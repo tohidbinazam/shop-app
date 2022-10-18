@@ -2,6 +2,10 @@ const initialState = {
     products: [],
     modal: false,
     single_product: '',
+    input: {
+        tag: [],
+        store: []
+    },
     skeleton: {
         status: true,
         row : 7,

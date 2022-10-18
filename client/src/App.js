@@ -10,6 +10,7 @@ import { getAllStores } from "./redux/store/action";
 import { getAllBrands } from "./redux/brand/action";
 import { getAllTags } from "./redux/tag/action";
 import { getAllCategories } from "./redux/category/action";
+import { getAllProducts } from "./redux/product/action";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    dispatch(getAllProducts())
     dispatch(getAllCategories())
     dispatch(getAllTags())
     dispatch(getAllBrands())

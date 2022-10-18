@@ -15,32 +15,32 @@ const ProductModal = Schema({
     },
     sell_price :{
         type : Number,
-        required : [ true, 'Sell Price is required']
     },
     category:{
         type : Schema.Types.ObjectId,
+        ref: 'Category',
         required : true,
     },
     tag:{
         type : [Schema.Types.ObjectId],
+        ref: 'Tag',
         required : true,
     },
     brand:{
         type: Schema.Types.ObjectId,
+        ref: 'Brand',
         required : true
     },
     stock:{
         type: Number,
-        required : true,
         min : [ 10, 'Minimum Quantity is 10']
     },
     store:{
         type: [Schema.Types.ObjectId],
-        required : true
+        ref: 'Store'
     },
     slug:{
         type: String,
-        required : true,
         trim : true
     },
     photo:{
@@ -60,6 +60,7 @@ const ProductModal = Schema({
     },
     long_desc:{
         type: String,
+        required : true,
         required : true
     }
 

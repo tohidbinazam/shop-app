@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ALL_PRODUCTS, MODAL_HIDE, MODAL_SHOW, SINGLE_PRODUCT, SKELETON_END, SKELETON_START } from "./type";
+import { ALL_PRODUCTS, MODAL_HIDE, MODAL_SHOW, PRODUCT_INPUT, SINGLE_PRODUCT, SKELETON_END, SKELETON_START } from "./type";
 import { toast } from 'react-toastify';
 import swal from 'sweetalert'
 
@@ -31,10 +31,21 @@ export const getAllProducts = () => async ( dispatch ) => {
         })
 }
 
+export const setInput = (data) => async ( dispatch, getState ) => {
+
+    const { input } = getState().product
+    const payload = { ...input, ...data }
+    dispatch({
+            type: PRODUCT_INPUT,
+            payload
+        })
+    
+}
+
 export const createProduct = (data) => async (dispatch, getState) => {
 
     // Add New Product
-    await axios.get('/api/v1/product', data).then(res => {
+    await axios.post('/api/v1/product', data).then(res => {
         dispatch(modalHide())
         toast.success('Product Add Successfully')
         const { products } = getState().product
