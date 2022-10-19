@@ -1,11 +1,10 @@
 const initialState = {
     products: [],
-    modal: false,
+    add_modal: false,
+    edit_modal: false,
+    quick_view: false,
     single_product: '',
-    input: {
-        tag: [],
-        store: []
-    },
+    edit_input:'',
     skeleton: {
         status: true,
         row : 7,

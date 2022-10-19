@@ -1,28 +1,35 @@
 import React from 'react'
 import { Button, Col, Modal, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { quickHide } from '../../redux/modal/action';
+import { quickHide } from '../../redux/product/action';
 
 const ProductQuickView = () => {
 
-    const { product_modal } = useSelector(state => state)
-    
+    const { quick_view, single_product } = useSelector(state => state.product)
+
+    const { name, category_name, brand_name, stock, stores, photo } = single_product
+
     const dispatch = useDispatch()
 
   return (
     <div>
-        <Modal show= { product_modal } onHide= { () => dispatch(quickHide()) } centered>
+        <Modal show= { quick_view } onHide= { () => dispatch(quickHide()) } centered>
             <Modal.Header closeButton>
                 <h3>Product info</h3>
             </Modal.Header>
             <Modal.Body>
                 <Row>
-                    <Col><img style={{ width : '100%' }} src="https://asia.canon/media/image/2022/05/23/2082b02be46045ad950d44b82c402a14_EOS+R10+w+RF-S18-150mm+f3.5-6.3+IS+STM+Front+Slant.png" alt="" /></Col>
+                    <Col><img style={{ width : '100%', height: '220px', objectFit: 'cover' }} src={`http://localhost:5050/images/products/photos/${ photo }`} alt="" /></Col>
                     <Col>
-                    <h6>Name: Sony A4s ultra</h6><hr />
-                    <h6>Category: Electronic</h6><hr />
-                    <h6>Brand: Sony Global</h6><hr />
-                    <h6>Stock: 50</h6>
+                    <h6>Name: { name }</h6><hr />
+                    <h6>Category: { category_name }</h6><hr />
+                    <h6>Brand: { brand_name }</h6><hr />
+                    <h6>Stock: { stock }</h6><hr />
+                    <h6>Stores: { stores.map(data => 
+                                `${ data.name }, `
+                            )
+                        }
+                    </h6>
                     </Col>
                 </Row>
             </Modal.Body>

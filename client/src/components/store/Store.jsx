@@ -43,7 +43,7 @@ const Store = () => {
                             <td>{ data.owner }</td>
                             <td>{ data.owner_number }</td>
                             <td>{ data.slug }</td>
-                            <td><img className='table-image' src={`http://localhost:5050/images/products/photos/${data.photo}`} alt={data.name}/></td>
+                            <td><img className='table-image' src={`http://localhost:5050/images/stores/photos/${data.photo}`} alt={data.name}/></td>
                             
                             <td>
                                 <Button onClick={ () => dispatch(singleStore(data._id)) } variant='warning' className='mx-2'><FaRegEdit /> Edit</Button>

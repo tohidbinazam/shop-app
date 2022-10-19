@@ -2,24 +2,27 @@ import React from 'react'
 import { Button, Table } from 'react-bootstrap';
 import { FaEye, FaRegEdit, FaTrashAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteProduct, modalShow, singleProduct } from '../../redux/product/action';
-import { quickShow } from '../../redux/modal/action';
+import { addShow, deleteProduct, editShow, quickShow } from '../../redux/product/action';
 import AddProduct from './AddProduct';
+import ProductQuickView from '../../components/product/ProductQuickView';
 import TableSkeleton from '../../utility/TableSkeleton';
+import EditProduct from './EditProduct';
 
 const Product = () => {
 
     const dispatch = useDispatch()
 
-    const { products, skeleton } = useSelector(state => state.product)
+    const { skeleton, products, single_product } = useSelector(state => state.product)
     
     
   return (
     <div> 
         <AddProduct />
+        <EditProduct />
+        { single_product && <ProductQuickView /> }
         <div className='d-flex justify-content-between my-3'>
             <h3>Products</h3>
-            <Button onClick={ () => dispatch(modalShow()) } > Add new product </Button>
+            <Button onClick={ () => dispatch(addShow()) } > Add new product </Button>
         </div>
         <Table striped hover bordered variant='dark' className='text-center'>
             <thead>
@@ -50,8 +53,8 @@ const Product = () => {
                             <td><img className='table-image' src={`http://localhost:5050/images/products/photos/${data.photo}`} alt={data.name}/></td>
                             
                             <td>
-                                <Button onClick={ () => dispatch( quickShow() ) } ><FaEye /> view</Button> 
-                                <Button onClick={ () => dispatch(singleProduct(data._id)) } variant='warning' className='mx-2'><FaRegEdit /> Edit</Button>
+                                <Button onClick={ () => dispatch(quickShow(data._id)) } ><FaEye /> view</Button> 
+                                <Button onClick={ () => dispatch(editShow(data._id)) } variant='warning' className='mx-2'><FaRegEdit /> Edit</Button>
                                 <Button onClick={ () => dispatch(deleteProduct(data._id)) } variant='danger'><FaTrashAlt /> Delete </Button>
                             </td>
                         </tr>

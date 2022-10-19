@@ -1,4 +1,3 @@
-import quickViewModal from "./modal/quickViewModal";
 import { combineReducers } from "redux"
 import storeReducer from "./store/storeReducer";
 import loadingBarReducer from "./loading-bar/loadingBarReducer";
@@ -11,7 +10,6 @@ import productReducer from "./product/productReducer";
 const rootReducer = combineReducers({
     progress : loadingBarReducer,
     product : productReducer,
-    product_modal: quickViewModal,
     category: categoryReducer,
     tag: tagReducer,
     brand : brandReducer,

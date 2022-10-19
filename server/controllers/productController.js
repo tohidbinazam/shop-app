@@ -55,12 +55,37 @@ export const getSingleProduct = async (req, res, next) => {
 export const updateProduct = async (req, res, next) => {
 
     const { id } = req.params
+    // const { tag, store } = req.body
 
-    try {
-        const product = await Product.findByIdAndUpdate(id, req.body, { new: true })
-        res.status(200).json(product)
-    } catch (error) {
-        next(error)
+    // It open when tag and store get array
+    // const tags = JSON.parse(tag)
+    // const stores = JSON.parse(store)
+
+    if (req.files.photo) {
+
+        const { photo } = req.files
+        const main_photo = photo[0].filename
+
+        // Hare code is { ...req.body, tags, stores, photo : main_photo }
+        const data = { ...req.body, photo : main_photo }
+        try {
+            const prev_pro = await Product.findByIdAndUpdate(id, data)
+            const product = await Product.findById(prev_pro._id).populate([ { path: 'tags', select: ['name', 'slug'] }, { path: 'stores', select: 'name' }, 'category', 'brand' ])
+
+            fs.unlinkSync(`server/public/images/products/photos/${prev_pro.photo}`)
+            res.status(200).json(product)
+        } catch {
+            next(createError(406, 'Already exist this Product'))
+        }
+        
+    } else {
+        try {
+            // Hare code is { ...req.body, tags, stores }
+            const product = await Product.findByIdAndUpdate(id, { ...req.body }, { new : true }).populate([ { path: 'tags', select: ['name', 'slug'] }, { path: 'stores', select: 'name' }, 'category', 'brand' ])
+            res.status(200).json(product)
+        } catch {
+            next(createError(406, 'Already exist this Product'))
+        }
     }
 
 }
@@ -71,7 +96,8 @@ export const deleteProduct = async (req, res, next) => {
 
     try {
         const product = await Product.findByIdAndDelete(id)
-        res.status(200).json(product)
+        fs.unlinkSync(`server/public/images/products/photos/${product.photo}`)
+        res.status(200).json('Product Delete Successfully')
     } catch (error) {
         next(error)
     }

@@ -1,20 +1,22 @@
 import React from 'react'
 import { Button, Card, Col, Container, Form, ListGroup, Row } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ProductQuickView from '../../components/product/ProductQuickView';
-import { quickShow } from '../../redux/modal/action';
+import { quickShow } from '../../redux/product/action';
 import './Shop.css'
 
 const Shop = () => {
 
     const dispatch = useDispatch()
+    
+    const { single_product } = useSelector(state => state.product)
 
   return (
     <div>
         <Container>
             <Row>
                 <Col md='3'>
-                    <ProductQuickView />
+                    { single_product && <ProductQuickView /> }
                     <Card>
                         <Card.Body>
                             <div className="search">
@@ -79,7 +81,7 @@ const Shop = () => {
                                     <h5>Sell price : $ 3200</h5>
                                 </Card.Body>
                                 <Card.Footer className='text-end'>
-                                    <Button onClick={ () => dispatch( quickShow() ) } > Quick view </Button>
+                                    <Button onClick={ () => dispatch(quickShow()) } > Quick view </Button>
                                 </Card.Footer>
                             </Card>
                         </Col>

@@ -1,18 +1,17 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { addHide, createProduct } from '../../redux/product/action';
+import { editHide, updateProduct } from '../../redux/product/action';
 import makeSlug from '../../utility/makeSlug';
 
-const AddProduct = () => {
+const EditProduct = () => {
 
     // Main State
     const { product, category, tag, brand, store } = useSelector(state => state)
 
     // Product state
-    const { add_modal } = product
+    const { edit_modal, single_product } = product
 
     // Category state
     const { categories } = category
@@ -28,11 +27,11 @@ const AddProduct = () => {
 
     const dispatch = useDispatch()
 
-    const [ input, setInput ] = useState({
-        tag:[],
-        store:[]
-    })
+    const [ input, setInput ] = useState({})
 
+    useEffect(() => {
+        setInput(single_product)
+    }, [single_product])
 
     // Update init state
     const handleInput = (e) => {
@@ -50,10 +49,10 @@ const AddProduct = () => {
         const tag = input.tag
         if (e.target.checked) {
             tag.push(e.target.value)
-            setInput(prev => ({ ...prev, tag }))
+            dispatch(setInput({ tag }))
         } else {
             const data = tag.filter(data => data !== e.target.value)
-            setInput(prev => ({ ...prev, tag : data }))
+            dispatch(setInput({ tag: data }))
         }
     }
 
@@ -63,10 +62,10 @@ const AddProduct = () => {
         const store = input.store
         if (e.target.checked) {
             store.push(e.target.value)
-            setInput(prev => ({ ...prev, store }))
+            dispatch(setInput({ store }))
         } else {
             const data = store.filter(data => data !== e.target.value)
-            setInput(prev => ({ ...prev, store : data }))
+            dispatch(setInput({ store: data }))
         }
     }
     
@@ -74,28 +73,27 @@ const AddProduct = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if (input.name && input.regular_price && input.category && input.tag && input.long_desc) {
+        if (input.name && input.regular_price && input.category  && input.long_desc) {
             
             const data = new FormData()
 
             // Make slug and update
             const slug = makeSlug( input.name )
-            
+    
             data.append('name', input.name)
             data.append('regular_price', input.regular_price)
             data.append('sell_price', input.sell_price)
             data.append('category', input.category)
-            data.append('tag', JSON.stringify(input.tag))
+            // data.append('tag', JSON.stringify(input.tag))
             data.append('brand', input.brand)
             data.append('stock', input.stock)
-            data.append('store', JSON.stringify(input.store))
+            // data.append('store', JSON.stringify(input.store))
             data.append('slug', slug)
             data.append('short_desc', input.short_desc)
             data.append('long_desc', input.long_desc)
             data.append('photo', input.photo)
-            
-            dispatch(createProduct(data))
-            e.target.reset()
+
+            dispatch(updateProduct(single_product._id, data))
             
         } else {
             toast.error('* Marked fields are required')
@@ -105,9 +103,9 @@ const AddProduct = () => {
 
   return (
     <div>
-        <Modal show={ add_modal } onHide={ () => dispatch(addHide()) } centered>
+        <Modal show={ edit_modal } onHide={ () => dispatch(editHide()) } centered>
             <Modal.Header closeButton>
-                <h3>Create Product</h3>
+                <h3>Update Product</h3>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={ handleSubmit }>
@@ -127,7 +125,7 @@ const AddProduct = () => {
                         <Form.Group className='mb-3' as={ Col } md='8'>
                             <Form.Label>Category</Form.Label>
                             <Form.Select name='category' value={ input.category } onChange={ handleInput }>
-                                <option >Select Category</option>
+                                <option> { input.category_name || 'Select Category' } </option>
                                 {
                                     categories.map(data =>
                                             <option value={ data._id } >{ data.name }</option> 
@@ -142,7 +140,7 @@ const AddProduct = () => {
                         <Form.Group className='mb-3' as={ Col } md='4'>
                             <Form.Label>Brand</Form.Label>
                             <Form.Select name='brand' value={ input.brand } onChange={ handleInput }>
-                                <option >Select Brand</option>
+                                <option >{ input.brand_name || 'Select Brand' }</option>
                                 {
                                     brands.map(data =>
                                             <option value={ data._id } >{ data.name }</option> 
@@ -183,8 +181,8 @@ const AddProduct = () => {
                             <Form.Control name='long_desc' value={ input.long_desc } onChange={ handleInput } as="textarea" rows={5} />
                         </Form.Group>
                         <Form.Group className='mb-3 text-end'>
-                            <Button onClick={ () => dispatch(addHide()) } variant='secondary me-2'>Close</Button>
-                            <Button type='submit'>Create</Button>
+                            <Button onClick={ () => dispatch(editHide()) } variant='secondary me-2'>Close</Button>
+                            <Button type='submit'>Update</Button>
                         </Form.Group>
                     </Row>
                 </Form>
@@ -194,4 +192,4 @@ const AddProduct = () => {
   )
 }
 
-export default AddProduct
+export default EditProduct

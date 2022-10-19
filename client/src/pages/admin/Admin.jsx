@@ -1,6 +1,5 @@
 import React from 'react'
 import { Card, Col, Container, Nav, Row, Tab } from 'react-bootstrap';
-import ProductQuickView from '../../components/product/ProductQuickView';
 import Category from '../../components/category/Category';
 import Product from '../../components/product/Product';
 import Tags from '../../components/tag/Tags';
@@ -16,7 +15,6 @@ const Admin = () => {
             <Tab.Container defaultActiveKey='Products'>
                 <Row>
                     <Col md='2'>
-                        <ProductQuickView />
                         <Card>
                             <Card.Body>
                                     <Nav variant='pills' className="flex-column">

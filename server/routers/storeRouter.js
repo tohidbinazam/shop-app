@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
     destination : (req, file, cb) => {
 
         if (file.fieldname == 'photo') {
-            cb(null, 'server/public/images/products/photos')
+            cb(null, 'server/public/images/stores/photos')
         } else {
             console.log('Invalid field');
         }
