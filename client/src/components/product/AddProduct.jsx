@@ -74,9 +74,9 @@ const AddProduct = () => {
         e.preventDefault()
 
         if (input.name && input.regular_price && input.category && input.tag && input.brand && input.long_desc) {
+            
             const data = new FormData()
 
-            
             // Make slug and update
             const slug = makeSlug( input.name )
 
@@ -86,10 +86,10 @@ const AddProduct = () => {
                 data.append('regular_price', input.regular_price)
                 data.append('sell_price', input.sell_price)
                 data.append('category', input.category)
-                data.append('tag', input.tag)
+                data.append('tag', JSON.stringify(input.tag))
                 data.append('brand', input.brand)
                 data.append('stock', input.stock)
-                data.append('store', input.store)
+                data.append('store', JSON.stringify(input.store))
                 data.append('slug', slug)
                 data.append('short_desc', input.short_desc)
                 data.append('long_desc', input.long_desc)
@@ -102,10 +102,10 @@ const AddProduct = () => {
                 data.append('regular_price', input.regular_price)
                 data.append('sell_price', input.sell_price)
                 data.append('category', input.category)
-                data.append('tag', input.tag)
+                data.append('tag', JSON.stringify(input.tag))
                 data.append('brand', input.brand)
                 data.append('stock', input.stock)
-                data.append('store', input.store)
+                data.append('store', JSON.stringify(input.store))
                 data.append('slug', slug)
                 data.append('short_desc', input.short_desc)
                 data.append('long_desc', input.long_desc)

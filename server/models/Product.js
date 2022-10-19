@@ -21,7 +21,7 @@ const ProductModal = Schema({
         ref: 'Category',
         required : true,
     },
-    tag:{
+    tags:{
         type : [Schema.Types.ObjectId],
         ref: 'Tag',
         required : true,
@@ -35,7 +35,7 @@ const ProductModal = Schema({
         type: Number,
         min : [ 10, 'Minimum Quantity is 10']
     },
-    store:{
+    stores:{
         type: [Schema.Types.ObjectId],
         ref: 'Store'
     },
@@ -60,7 +60,6 @@ const ProductModal = Schema({
     },
     long_desc:{
         type: String,
-        required : true,
         required : true
     }
 

@@ -21,7 +21,7 @@ const port = process.env.PORT || 5000
 
 // Req Body init
 app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 
 app.use(express.static('server/public'))
 

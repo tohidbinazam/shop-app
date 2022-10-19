@@ -44,8 +44,8 @@ const Product = () => {
                             <td>{ data.name }</td>
                             <td>{ data.regular_price }</td>
                             <td>{ data.sell_price }</td>
-                            <td>{ data.category }</td>
-                            <td>{ data.brand }</td>
+                            <td>{ data.category.name }</td>
+                            <td>{ data.brand.name }</td>
                             <td>{ data.stock }</td>
                             <td><img className='table-image' src={`http://localhost:5050/images/products/photos/${data.photo}`} alt={data.name}/></td>
                             
