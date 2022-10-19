@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Card, Col, Container, Form, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import ProductQuickView from '../../components/product/ProductQuickView';
-import { quickShow } from '../../redux/product/action';
+import { quickShow } from '../../redux/modal/action';
 import './Shop.css'
 
 const Shop = () => {

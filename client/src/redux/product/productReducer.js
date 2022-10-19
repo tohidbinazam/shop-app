@@ -1,5 +1,5 @@
 import initialState from "./initialState";
-import { ADD_HIDE, ADD_SHOW, ALL_PRODUCTS, EDIT_HIDE, EDIT_SHOW, QUICK_HIDE, QUICK_SHOW, SINGLE_PRODUCT, SKELETON_END, SKELETON_START } from "./type";
+import { ALL_PRODUCTS, MODAL_HIDE, MODAL_SHOW, PRODUCT_INPUT, SINGLE_PRODUCT, SKELETON_END, SKELETON_START } from "./type";
 
 
 const productReducer = ( state = initialState, { type, payload }) => {
@@ -23,35 +23,21 @@ const productReducer = ( state = initialState, { type, payload }) => {
                     status : false
                 }
             }
-        case ADD_SHOW:
+        case MODAL_SHOW:
             return{
                 ...state,
-                add_modal: true
+                modal: true,
+                input: {
+                    tag: [],
+                    store: []
+                }
             }
-        case ADD_HIDE:
+        case MODAL_HIDE:
             return{
                 ...state,
-                add_modal: false
-            }
-        case EDIT_SHOW:
-            return{
-                ...state,
-                edit_modal: true
-            }
-        case EDIT_HIDE:
-            return{
-                ...state,
-                edit_modal: false
-            }
-        case QUICK_SHOW:
-            return{
-                ...state,
-                quick_view: true
-            }
-        case QUICK_HIDE:
-            return{
-                ...state,
-                quick_view: false
+                modal: false,
+                single_product: '',
+                input: ''
             }
         case ALL_PRODUCTS:
             return{
@@ -62,6 +48,11 @@ const productReducer = ( state = initialState, { type, payload }) => {
             return{
                 ...state,
                 single_product: payload
+            }
+        case PRODUCT_INPUT:
+            return{
+                ...state,
+                input: payload
             }
         default:
             return state

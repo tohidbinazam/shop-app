@@ -1,5 +1,6 @@
 import axios from "axios";
-import { ADD_HIDE, ADD_SHOW, ALL_PRODUCTS, EDIT_HIDE, EDIT_SHOW, QUICK_HIDE, QUICK_SHOW, SINGLE_PRODUCT, SKELETON_END, SKELETON_START } from "./type";
+import { ALL_PRODUCTS, MODAL_HIDE, MODAL_SHOW, PRODUCT_INPUT, SINGLE_PRODUCT, SKELETON_END, SKELETON_START } from "./type";
+import { quickShow } from '../../redux/modal/action';
 import { toast } from 'react-toastify';
 import swal from 'sweetalert'
 
@@ -12,27 +13,11 @@ const skeletonEnd = () => ({
     type : SKELETON_END
 })
 
-export const quickShow = (id) => (dispatch) => {
-    dispatch({ type : QUICK_SHOW })
-    dispatch(singleProduct(id))
-}
-export const quickHide = () => ({
-    type : QUICK_HIDE
+export const modalShow = () => ({
+    type : MODAL_SHOW
 })
-
-export const addShow = () => ({
-    type : ADD_SHOW
-})
-export const addHide = () => ({
-    type : ADD_HIDE
-})
-
-export const editShow = (id) => (dispatch) => {
-    dispatch({ type : EDIT_SHOW })
-    dispatch(singleProduct(id))
-}
-export const editHide = () => ({
-    type : EDIT_HIDE
+export const modalHide = () => ({
+    type : MODAL_HIDE
 })
 
 export const getAllProducts = () => async ( dispatch ) => {
@@ -47,22 +32,22 @@ export const getAllProducts = () => async ( dispatch ) => {
         })
 }
 
-// export const setInput = (data) => async ( dispatch, getState ) => {
+export const setInput = (data) => async ( dispatch, getState ) => {
 
-//     const { input } = getState().product
-//     const payload = { ...input, ...data }
-//     dispatch({
-//             type: PRODUCT_INPUT,
-//             payload
-//         })
+    const { input } = getState().product
+    const payload = { ...input, ...data }
+    dispatch({
+            type: PRODUCT_INPUT,
+            payload
+        })
     
-// }
+}
 
 export const createProduct = (data) => async (dispatch, getState) => {
 
     // Add New Product
-    dispatch(addHide())
     await axios.post('/api/v1/product', data).then(res => {
+        dispatch(modalHide())
         toast.success('Product Add Successfully')
         const { products } = getState().product
         products.push(res.data)
@@ -113,25 +98,19 @@ export const singleProduct = (id) => (dispatch, getState) => {
 
     // Single view Product
     const { products } = getState().product
-    const product = products.find(data => data._id === id)
-    const payload = {
-        ...product,
-        category : product.category._id,
-        brand : product.brand._id,
-        category_name: product.category.name,
-        brand_name: product.brand.name
-    }
+    const payload = products.find(data => data._id === id)
     dispatch({
         type: SINGLE_PRODUCT,
         payload
     });
+    dispatch(quickShow())
 }
 
 export const updateProduct = (id, data) => async (dispatch, getState) => {
 
     // Add New Product
     await axios.patch(`/api/v1/product/${id}`, data).then(res => {
-        dispatch(editHide())
+        dispatch(modalHide())
 
         // Handle product update without send server request
         const { products } = getState().product

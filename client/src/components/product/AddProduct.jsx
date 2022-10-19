@@ -1,9 +1,8 @@
 import React from 'react'
-import { useState } from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { addHide, createProduct } from '../../redux/product/action';
+import { createProduct, modalHide, setInput, updateProduct } from '../../redux/product/action';
 import makeSlug from '../../utility/makeSlug';
 
 const AddProduct = () => {
@@ -12,7 +11,7 @@ const AddProduct = () => {
     const { product, category, tag, brand, store } = useSelector(state => state)
 
     // Product state
-    const { add_modal } = product
+    const { modal, input, single_product } = product
 
     // Category state
     const { categories } = category
@@ -28,20 +27,20 @@ const AddProduct = () => {
 
     const dispatch = useDispatch()
 
-    const [ input, setInput ] = useState({
-        tag:[],
-        store:[]
-    })
+    // const { name, regular_price, sell_price, category, brand, stock, photo, short_desc, long_desc } = input
 
+    // useEffect(() => {
+    //     setInput(single_product)
+    // }, [single_product])
 
     // Update init state
     const handleInput = (e) => {
-        setInput(prev => ({ ...prev, [e.target.name] : e.target.value }))
+        dispatch(setInput({ [e.target.name] : e.target.value })) 
     }
 
     // Handle single photo
     const handelPhoto = (e) => {
-        setInput(prev => ({ ...prev, [e.target.name] : e.target.files[0] }))
+        dispatch(setInput({ [e.target.name] : e.target.files[0] }))
     }
 
     // Update Tag state
@@ -50,10 +49,10 @@ const AddProduct = () => {
         const tag = input.tag
         if (e.target.checked) {
             tag.push(e.target.value)
-            setInput(prev => ({ ...prev, tag }))
+            dispatch(setInput({ tag }))
         } else {
             const data = tag.filter(data => data !== e.target.value)
-            setInput(prev => ({ ...prev, tag : data }))
+            dispatch(setInput({ tag: data }))
         }
     }
 
@@ -63,10 +62,10 @@ const AddProduct = () => {
         const store = input.store
         if (e.target.checked) {
             store.push(e.target.value)
-            setInput(prev => ({ ...prev, store }))
+            dispatch(setInput({ store }))
         } else {
             const data = store.filter(data => data !== e.target.value)
-            setInput(prev => ({ ...prev, store : data }))
+            dispatch(setInput({ store: data }))
         }
     }
     
@@ -74,40 +73,58 @@ const AddProduct = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if (input.name && input.regular_price && input.category && input.tag && input.long_desc) {
+        if (input.name && input.regular_price && input.category && input.tag && input.brand && input.long_desc) {
             
             const data = new FormData()
 
             // Make slug and update
             const slug = makeSlug( input.name )
-            
-            data.append('name', input.name)
-            data.append('regular_price', input.regular_price)
-            data.append('sell_price', input.sell_price)
-            data.append('category', input.category)
-            data.append('tag', JSON.stringify(input.tag))
-            data.append('brand', input.brand)
-            data.append('stock', input.stock)
-            data.append('store', JSON.stringify(input.store))
-            data.append('slug', slug)
-            data.append('short_desc', input.short_desc)
-            data.append('long_desc', input.long_desc)
-            data.append('photo', input.photo)
-            
-            dispatch(createProduct(data))
-            e.target.reset()
-            
+
+            if (single_product) {
+    
+                data.append('name', input.name)
+                data.append('regular_price', input.regular_price)
+                data.append('sell_price', input.sell_price)
+                data.append('category', input.category)
+                data.append('tag', JSON.stringify(input.tag))
+                data.append('brand', input.brand)
+                data.append('stock', input.stock)
+                data.append('store', JSON.stringify(input.store))
+                data.append('slug', slug)
+                data.append('short_desc', input.short_desc)
+                data.append('long_desc', input.long_desc)
+                data.append('photo', input.photo)
+    
+                dispatch(updateProduct(single_product._id, data))
+            } else{
+                
+                data.append('name', input.name)
+                data.append('regular_price', input.regular_price)
+                data.append('sell_price', input.sell_price)
+                data.append('category', input.category)
+                data.append('tag', JSON.stringify(input.tag))
+                data.append('brand', input.brand)
+                data.append('stock', input.stock)
+                data.append('store', JSON.stringify(input.store))
+                data.append('slug', slug)
+                data.append('short_desc', input.short_desc)
+                data.append('long_desc', input.long_desc)
+                data.append('photo', input.photo)
+                
+                dispatch(createProduct(data))
+                e.target.reset()
+            }
         } else {
-            toast.error('* Marked fields are required')
+            toast.error('All fields are required')
         }
         
     }
 
   return (
     <div>
-        <Modal show={ add_modal } onHide={ () => dispatch(addHide()) } centered>
+        <Modal show={ modal } onHide={ () => dispatch(modalHide()) } centered>
             <Modal.Header closeButton>
-                <h3>Create Product</h3>
+                <h3>{ single_product ? 'Update' : 'Create' } Product</h3>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={ handleSubmit }>
@@ -183,8 +200,8 @@ const AddProduct = () => {
                             <Form.Control name='long_desc' value={ input.long_desc } onChange={ handleInput } as="textarea" rows={5} />
                         </Form.Group>
                         <Form.Group className='mb-3 text-end'>
-                            <Button onClick={ () => dispatch(addHide()) } variant='secondary me-2'>Close</Button>
-                            <Button type='submit'>Create</Button>
+                            <Button onClick={ () => dispatch(modalHide()) } variant='secondary me-2'>Close</Button>
+                            <Button type='submit'> { single_product ? 'Update' : 'Create' }</Button>
                         </Form.Group>
                     </Row>
                 </Form>

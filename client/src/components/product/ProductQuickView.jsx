@@ -1,19 +1,19 @@
 import React from 'react'
 import { Button, Col, Modal, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { quickHide } from '../../redux/product/action';
+import { quickHide } from '../../redux/modal/action';
 
 const ProductQuickView = () => {
 
-    const { quick_view, single_product } = useSelector(state => state.product)
+    const { product_modal, product } = useSelector(state => state)
 
-    const { name, category_name, brand_name, stock, stores, photo } = single_product
+    const { name, category, brand, stock, stores, photo } = product.single_product
 
     const dispatch = useDispatch()
 
   return (
     <div>
-        <Modal show= { quick_view } onHide= { () => dispatch(quickHide()) } centered>
+        <Modal show= { product_modal } onHide= { () => dispatch(quickHide()) } centered>
             <Modal.Header closeButton>
                 <h3>Product info</h3>
             </Modal.Header>
@@ -22,8 +22,8 @@ const ProductQuickView = () => {
                     <Col><img style={{ width : '100%', height: '220px', objectFit: 'cover' }} src={`http://localhost:5050/images/products/photos/${ photo }`} alt="" /></Col>
                     <Col>
                     <h6>Name: { name }</h6><hr />
-                    <h6>Category: { category_name }</h6><hr />
-                    <h6>Brand: { brand_name }</h6><hr />
+                    <h6>Category: { category.name }</h6><hr />
+                    <h6>Brand: { brand.name }</h6><hr />
                     <h6>Stock: { stock }</h6><hr />
                     <h6>Stores: { stores.map(data => 
                                 `${ data.name }, `
