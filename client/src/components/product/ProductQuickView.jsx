@@ -19,7 +19,7 @@ const ProductQuickView = () => {
             </Modal.Header>
             <Modal.Body>
                 <Row>
-                    <Col><img style={{ width : '100%', height: '220px', objectFit: 'cover' }} src={`http://localhost:5050/images/products/photos/${ photo }`} alt="" /></Col>
+                    <Col><img style={{ width : '100%', height: '220px', objectFit: 'cover' }} src={`images/products/photos/${ photo }`} alt="" /></Col>
                     <Col>
                     <h6>Name: { name }</h6><hr />
                     <h6>Category: { category_name }</h6><hr />

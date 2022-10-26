@@ -13,8 +13,8 @@ const skeletonEnd = () => ({
 })
 
 export const quickShow = (id) => (dispatch) => {
-    dispatch({ type : QUICK_SHOW })
     dispatch(singleProduct(id))
+    dispatch({ type : QUICK_SHOW })
 }
 export const quickHide = () => ({
     type : QUICK_HIDE
@@ -46,17 +46,6 @@ export const getAllProducts = () => async ( dispatch ) => {
             })
         })
 }
-
-// export const setInput = (data) => async ( dispatch, getState ) => {
-
-//     const { input } = getState().product
-//     const payload = { ...input, ...data }
-//     dispatch({
-//             type: PRODUCT_INPUT,
-//             payload
-//         })
-    
-// }
 
 export const createProduct = (data) => async (dispatch, getState) => {
 
@@ -114,8 +103,12 @@ export const singleProduct = (id) => (dispatch, getState) => {
     // Single view Product
     const { products } = getState().product
     const product = products.find(data => data._id === id)
+    const tag = []
+    const store = []
+    product.tags.map(data => tag.push(data._id))
+    product.stores.map(data => store.push(data._id))
     const payload = {
-        ...product,
+        ...product, tag, store,
         category : product.category._id,
         brand : product.brand._id,
         category_name: product.category.name,

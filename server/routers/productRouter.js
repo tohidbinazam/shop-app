@@ -11,6 +11,8 @@ const storage = multer.diskStorage({
 
         if (file.fieldname == 'photo') {
             cb(null, 'server/public/images/products/photos')
+        } else if (file.fieldname == 'gallery') {
+            cb(null, 'server/public/images/products/gallery')
         } else {
             console.log('Invalid field');
         }
@@ -22,7 +24,13 @@ const storage = multer.diskStorage({
             let date = new Date()
             const unique_prefix = `${date.getDate()}_${date.getMonth()}_${date.getFullYear()}` 
             const name =`${file.fieldname}_${unique_prefix}_${Date.now()}${ext}`
-        
+            cb(null, name)
+
+        } else if (file.fieldname == 'gallery') {
+            const ext = path.extname(file.originalname)
+            let date = new Date()
+            const unique_prefix = `${date.getDate()}_${date.getMonth()}_${date.getFullYear()}` 
+            const name =`${file.fieldname}_${unique_prefix}_${Date.now()}${ext}`
             cb(null, name)
 
         }else{
@@ -44,13 +52,20 @@ const upload = multer({
             } else {
                 console.log('Invalid file type');
             }
+        } else if (file.fieldname == 'gallery') {
+            if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') {
+                cb(null, true)
+            } else {
+                console.log('Invalid file type');
+            }
         } else {
             console.log('Invalid field');
         }
     }
     
 }).fields([
-    {name: 'photo', maxCount : 1}
+    {name: 'photo', maxCount : 1},
+    {name: 'gallery', maxCount : 5}
 ])
 
 

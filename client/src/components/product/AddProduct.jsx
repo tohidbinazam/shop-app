@@ -41,7 +41,11 @@ const AddProduct = () => {
 
     // Handle single photo
     const handelPhoto = (e) => {
-        setInput(prev => ({ ...prev, [e.target.name] : e.target.files[0] }))
+        setInput(prev => ({ ...prev, photo : e.target.files[0] }))
+    }
+
+    const handelGallery = (e) => {
+        setInput(prev => ({ ...prev, gallery : e.target.files }))
     }
 
     // Update Tag state
@@ -93,9 +97,16 @@ const AddProduct = () => {
             data.append('short_desc', input.short_desc)
             data.append('long_desc', input.long_desc)
             data.append('photo', input.photo)
+
+            for (let i = 0; i < input.gallery.length; i++) {
+                data.append('gallery', input.gallery[i])
+            }
             
             dispatch(createProduct(data))
-            e.target.reset()
+            setInput({
+                tag:[],
+                store:[]
+            })
             
         } else {
             toast.error('* Marked fields are required')
@@ -152,25 +163,25 @@ const AddProduct = () => {
                         </Form.Group>
                         <Form.Group className='mb-3' as={ Col } md='8'>
                             <Form.Label>Photo</Form.Label>
-                            <Form.Control name='photo' onChange={ handelPhoto } type='file' accept="image/png, image/jpeg"/>
+                            <Form.Control onChange={ handelPhoto } type='file' accept="image/png, image/jpeg"/>
                         </Form.Group>
                         <Form.Group className='mb-3'>
                             <Form.Label>Gallery</Form.Label>
-                            <Form.Control name='gallery' onChange={ handleInput } type='file' />
+                            <Form.Control onChange={ handelGallery } type='file' accept="image/png, image/jpeg" multiple/>
                         </Form.Group>
                         <Form.Group className='mb-3'>
                             <Form.Label>Tags</Form.Label><br />
                             {
-                                tags.map(data =>
-                                        <Form.Check onClick={ handleTag } value={ data._id } type='checkbox' label={ data.name } inline />
+                                tags.map((data, index) =>
+                                        <Form.Check id={`tagCheckbox${1 + index}`} onClick={ handleTag } value={ data._id } type='checkbox' label={ data.name } inline />
                                     )
                             }
                         </Form.Group>
                         <Form.Group className='mb-3'>
                             <Form.Label>Store</Form.Label><br />
                             {
-                                stores.map(data =>
-                                        <Form.Check onClick={ handleStore } value={ data._id } type='checkbox' label={ data.name } inline />
+                                stores.map((data, index) =>
+                                        <Form.Check id={`storeCheckbox${1 + index}`} onClick={ handleStore } value={ data._id } type='checkbox' label={ data.name } inline />
                                     )
                             }
                         </Form.Group>

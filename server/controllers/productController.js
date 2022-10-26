@@ -15,7 +15,11 @@ export const getAllProducts = async (req, res, next ) => {
 
 export const createProduct = async (req, res, next) => {
 
-    const { photo } = req.files
+    const { photo, gallery } = req.files
+
+    const gallery_photos = []
+    gallery.map(data => gallery_photos.push(data.filename))
+
     const { name, tag, store } = req.body
 
     const main_photo = photo[0].filename
@@ -28,9 +32,12 @@ export const createProduct = async (req, res, next) => {
 
         if (check.length) {
             fs.unlinkSync(`server/public/images/products/photos/${main_photo}`)
+            gallery.map(data => {
+                fs.unlinkSync(`server/public/images/products/gallery/${data.filename}`)
+            })
             return next(createError(406, 'Already exist this Product'))
         }
-        const nw_pro = await Product.create({...req.body, tags, stores, photo: main_photo})
+        const nw_pro = await Product.create({...req.body, tags, stores, photo: main_photo, gallery: gallery_photos })
         const product = await Product.findById(nw_pro._id).populate([ { path: 'tags', select: ['name', 'slug'] }, { path: 'stores', select: 'name' }, 'category', 'brand' ])
         res.status(201).json(product)
     } catch (error) {
@@ -97,6 +104,9 @@ export const deleteProduct = async (req, res, next) => {
     try {
         const product = await Product.findByIdAndDelete(id)
         fs.unlinkSync(`server/public/images/products/photos/${product.photo}`)
+        product.gallery.map(data => {
+            fs.unlinkSync(`server/public/images/products/gallery/${data}`)
+        })
         res.status(200).json('Product Delete Successfully')
     } catch (error) {
         next(error)

@@ -14,7 +14,6 @@ const Product = () => {
 
     const { skeleton, products, single_product } = useSelector(state => state.product)
     
-    
   return (
     <div> 
         <AddProduct />
@@ -50,7 +49,7 @@ const Product = () => {
                             <td>{ data.category.name }</td>
                             <td>{ data.brand.name }</td>
                             <td>{ data.stock }</td>
-                            <td><img className='table-image' src={`http://localhost:5050/images/products/photos/${data.photo}`} alt={data.name}/></td>
+                            <td><img className='table-image' src={`images/products/photos/${data.photo}`} alt={data.name}/></td>
                             
                             <td>
                                 <Button onClick={ () => dispatch(quickShow(data._id)) } ><FaEye /> view</Button> 

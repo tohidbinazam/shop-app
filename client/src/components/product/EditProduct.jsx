@@ -128,7 +128,7 @@ const EditProduct = () => {
                                 <option> { input.category_name || 'Select Category' } </option>
                                 {
                                     categories.map(data =>
-                                            <option value={ data._id } >{ data.name }</option> 
+                                            input.category_name !== data.name ? <option value={ data._id } >{ data.name }</option> : ''
                                         )
                                 }
                             </Form.Select>
@@ -143,7 +143,7 @@ const EditProduct = () => {
                                 <option >{ input.brand_name || 'Select Brand' }</option>
                                 {
                                     brands.map(data =>
-                                            <option value={ data._id } >{ data.name }</option> 
+                                            input.brand_name !== data.name ? <option value={ data._id } >{ data.name }</option> : ''
                                         )
                                 }
                             </Form.Select>
@@ -159,16 +159,16 @@ const EditProduct = () => {
                         <Form.Group className='mb-3'>
                             <Form.Label>Tags</Form.Label><br />
                             {
-                                tags.map(data =>
-                                        <Form.Check onClick={ handleTag } value={ data._id } type='checkbox' label={ data.name } inline />
-                                    )
+                                tags.map((data, index) =>
+                                    <Form.Check id={`tagCheckbox${1 + index}`} onClick={ handleTag } value={ data._id } type='checkbox' label={ data.name } inline/>
+                                )
                             }
                         </Form.Group>
                         <Form.Group className='mb-3'>
                             <Form.Label>Store</Form.Label><br />
                             {
-                                stores.map(data =>
-                                        <Form.Check onClick={ handleStore } value={ data._id } type='checkbox' label={ data.name } inline />
+                                stores.map((data, index) =>
+                                        <Form.Check id={`storeCheckbox${1 + index}`} onClick={ handleStore } value={ data._id } type='checkbox' label={ data.name } inline />
                                     )
                             }
                         </Form.Group>

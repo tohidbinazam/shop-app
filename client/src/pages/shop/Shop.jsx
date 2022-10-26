@@ -9,7 +9,21 @@ const Shop = () => {
 
     const dispatch = useDispatch()
     
-    const { single_product } = useSelector(state => state.product)
+    const { product, category, tag, brand, store } = useSelector(state => state)
+
+    const { products, single_product } = product
+
+    // Category state
+    const { categories } = category
+
+    // Tag state
+    const { tags } = tag
+
+    // Brand state
+    const { brands } = brand
+
+    // Store state
+    const { stores } = store
 
   return (
     <div>
@@ -27,26 +41,45 @@ const Shop = () => {
                             <div className="category-search my-4">
                                 <h4>Category</h4>
                                 <ListGroup>
-                                    <ListGroup.Item>Man</ListGroup.Item>
-                                    <ListGroup.Item>Woman</ListGroup.Item>
-                                    <ListGroup.Item>Kids</ListGroup.Item>
+                                    {
+                                        categories.map(data => 
+                                                <ListGroup.Item>{ data.name }</ListGroup.Item>
+                                            )
+                                    }
                                 </ListGroup>
                             </div>
 
-                            <div className="brand-search">
-                                <h4>Brand</h4>
-                                <Form.Check type='checkbox' label="RFL"/>
-                                <Form.Check type='checkbox' label="Jamuna"/>
-                                <Form.Check type='checkbox' label="Padma"/>
-                            </div>
-
+                            <Row>
+                                <Col md='6'>
+                                    <div className="brand-search">
+                                        <h4>Brand</h4>
+                                        {
+                                            brands.map((data, index) =>
+                                                    <Form.Check id={`brandCheckbox${1 + index}`} onClick={ '' } value={ data._id } type='checkbox' label={ data.name } />
+                                                )
+                                        }
+                                    </div>
+                                </Col>
+                                <Col md='6'>
+                                    <div className="brand-search">
+                                        <h4>Stores</h4>
+                                        {
+                                            stores.map((data, index) =>
+                                                    <Form.Check id={`storesCheckbox${1 + index}`} onClick={ '' } value={ data._id } type='checkbox' label={ data.name } />
+                                                )
+                                        }
+                                    </div>
+                                </Col>
+                            </Row>
+                        
                             <div className="brand-search my-3">
                                 <h4>Tags</h4>
                                 <div className="all-tags">
-                                    <a href="http://tohid">Eid</a>
-                                    <a href="http://tohid">Puja</a>
-                                    <a href="http://tohid">Asura</a>
-                                    <a href="http://tohid">Dress</a>
+                                    {
+                                        tags.map(data => 
+                                                <a href="http://tohid">{ data.name }</a>
+                                            )
+                                    }
                                 </div>
                             </div>
 
@@ -71,62 +104,24 @@ const Shop = () => {
                 <Col md='9'>
                     <h3>Products</h3>
                     <Row>
-                        <Col md='4'>
-                            <Card className='my-3'>
-                                <Card.Img variant='top' src='https://asia.canon/media/image/2022/05/23/2082b02be46045ad950d44b82c402a14_EOS+R10+w+RF-S18-150mm+f3.5-6.3+IS+STM+Front+Slant.png' />
-                                <Card.Body>
-                                <hr />
-                                    <Card.Title>Sony A83s</Card.Title>
-                                    <h6>Regular price : $ 3800</h6>
-                                    <h5>Sell price : $ 3200</h5>
-                                </Card.Body>
-                                <Card.Footer className='text-end'>
-                                    <Button onClick={ () => dispatch(quickShow()) } > Quick view </Button>
-                                </Card.Footer>
-                            </Card>
-                        </Col>
-                        <Col md='4'>
-                            <Card className='my-3'>
-                                <Card.Img variant='top' src='https://asia.canon/media/image/2022/05/23/2082b02be46045ad950d44b82c402a14_EOS+R10+w+RF-S18-150mm+f3.5-6.3+IS+STM+Front+Slant.png' />
-                                <Card.Body>
-                                <hr />
-                                    <Card.Title>Sony A83s</Card.Title>
-                                    <h6>Regular price : $ 3800</h6>
-                                    <h5>Sell price : $ 3200</h5>
-                                </Card.Body>
-                                <Card.Footer className='text-end'>
-                                    <Button onClick={ () => dispatch( quickShow() ) } > Quick view </Button>
-                                </Card.Footer>
-                            </Card>
-                        </Col>
-                        <Col md='4'>
-                            <Card className='my-3'>
-                                <Card.Img variant='top' src='https://asia.canon/media/image/2022/05/23/2082b02be46045ad950d44b82c402a14_EOS+R10+w+RF-S18-150mm+f3.5-6.3+IS+STM+Front+Slant.png' />
-                                <Card.Body>
-                                <hr />
-                                    <Card.Title>Sony A83s</Card.Title>
-                                    <h6>Regular price : $ 3800</h6>
-                                    <h5>Sell price : $ 3200</h5>
-                                </Card.Body>
-                                <Card.Footer className='text-end'>
-                                    <Button> Quick view </Button>
-                                </Card.Footer>
-                            </Card>
-                        </Col>
-                        <Col md='4'>
-                            <Card className='my-3'>
-                                <Card.Img variant='top' src='https://asia.canon/media/image/2022/05/23/2082b02be46045ad950d44b82c402a14_EOS+R10+w+RF-S18-150mm+f3.5-6.3+IS+STM+Front+Slant.png' />
-                                <Card.Body>
-                                <hr />
-                                    <Card.Title>Sony A83s</Card.Title>
-                                    <h6>Regular price : $ 3800</h6>
-                                    <h5>Sell price : $ 3200</h5>
-                                </Card.Body>
-                                <Card.Footer className='text-end'>
-                                    <Button> Quick view </Button>
-                                </Card.Footer>
-                            </Card>
-                        </Col>
+                        {
+                            products.map(data => 
+                                    <Col md='4'>
+                                        <Card className='my-3'>
+                                            <Card.Img style={{ width : '100%', height: '300px', objectFit: 'cover' }} variant='top' src={`images/products/photos/${ data.photo }`} />
+                                            <Card.Body>
+                                            <hr />
+                                                <Card.Title>{ data.name }</Card.Title>
+                                                <h6>Regular price : $ { data.regular_price }</h6>
+                                                <h5>Sell price : $ { data.sell_price }</h5>
+                                            </Card.Body>
+                                            <Card.Footer className='text-end'>
+                                                <Button onClick={ () => dispatch(quickShow(data._id)) } > Quick view </Button>
+                                            </Card.Footer>
+                                        </Card>
+                                    </Col>
+                                )
+                        }
                     </Row>
                 </Col>
             </Row>
